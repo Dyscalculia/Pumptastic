@@ -10,5 +10,5 @@ public interface DBConnect
 
     List<Gruppe> getGroups(Integer parentId);
 
-    List<Øvelse> getExercise(int parentGroupId);
+    List<Øvelse> getExercises(int parentGroupId);
 }
