@@ -1,16 +1,21 @@
 package Backend;
 
+import java.sql.SQLException;
 import java.util.List;
+
+import utils.Group;
+import utils.Workout;
+import utils.Exercise;
 
 public interface DBConnect
 {
-    List<Trening> getTreninger();
+    List<Workout> getWorkouts() throws SQLException;
 
-    Trening getTrening(int id);
+    Workout getWorkout(int id) throws SQLException;
 
-    void createTrening(Trening trening);
+    void createWorkout(Workout workout);
 
-    List<Gruppe> getGroups(Integer parentId);
+    List<Group> getGroups(Integer parentId) throws SQLException;
 
-    List<Øvelse> getExercises(int parentGroupId);
+    List<Exercise> getExercises(int parentGroupId) throws SQLException;
 }
