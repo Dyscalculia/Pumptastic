@@ -7,7 +7,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ux.IndexController">
    <children>
       <ScrollPane hmax="0.0" layoutY="118.0" prefHeight="500.0" prefWidth="400.0" stylesheets="@assets/scrollpane.css">
          <content>
@@ -38,6 +38,6 @@
             <DropShadow blurType="GAUSSIAN" height="5.0" offsetX="0.5" offsetY="0.5" radius="0.75" width="0.0" />
          </effect>
       </Label>
-      <Button layoutX="5.0" layoutY="70.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="390.0" stylesheets="@assets/button.css" text="+ Registrer ny trening" />
+      <Button layoutX="5.0" layoutY="70.0" mnemonicParsing="false" onAction="#button_registrer_ny_trening" prefHeight="35.0" prefWidth="390.0" stylesheets="@assets/button.css" text="+ Registrer ny trening" />
    </children>
 </AnchorPane>

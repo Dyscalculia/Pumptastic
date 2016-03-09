@@ -7,7 +7,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ux.FormController">
     <children>
       <TilePane layoutY="43.0" prefHeight="178.0" prefWidth="400.0" style="-fx-background-color: #385056;" />
         <Label alignment="CENTER" prefHeight="60.0" prefWidth="400.0" style="-fx-background-color: #344550;" text="Pumptastic" textFill="WHITE">
@@ -46,7 +46,7 @@
                   </HBox>
                   <HBox spacing="10.0">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="200.0" stylesheets="@assets/button.css" text="Legg til" />
+                        <Button mnemonicParsing="false" onAction="#button_legg_til" prefHeight="27.0" prefWidth="200.0" stylesheets="@assets/button.css" text="Legg til" />
                         <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="200.0" style="-fx-background-color: #D90429; -fx-border-color: #EF233C;" stylesheets="@assets/button.css" text="Slett" />
                      </children>
                      <padding>
