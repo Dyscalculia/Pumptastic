@@ -27,7 +27,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
-        window.setTitle("thenewboston - JavaFX");
+        window.setTitle("thenewboston - JavaFX"); //test
 
         //Name column
         TableColumn<Product, String> nameColumn = new TableColumn<>("Name");

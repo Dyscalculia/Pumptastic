@@ -1,9 +1,8 @@
 package ux;
-import Backend.DBConnect;
-import Backend.DBConnectMock;
+import backend.DBConnect;
+import backend.DBConnectMock;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
