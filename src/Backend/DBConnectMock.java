@@ -2,29 +2,33 @@ package Backend;
 
 import java.util.List;
 
+import utils.Group;
+import utils.Workout;
+import utils.Exercise;
+
 public class DBConnectMock implements DBConnect {
     @Override
-    public List<Trening> getTreninger() {
+    public List<Workout> getTreninger() {
         return null;
     }
 
     @Override
-    public Trening getTrening(int id) {
+    public Workout getTrening(int id) {
         return null;
     }
 
     @Override
-    public void createTrening(Trening trening) {
+    public void createTrening(Workout trening) {
 
     }
 
     @Override
-    public List<Gruppe> getGroups(Integer parentId) {
+    public List<Group> getGroups(Integer parentId) {
         return null;
     }
 
     @Override
-    public List<Øvelse> getExercises(int parentGroupId) {
+    public List<Exercise> getExercises(int parentGroupId) {
         return null;
     }
 }
