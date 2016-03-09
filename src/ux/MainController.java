@@ -16,7 +16,6 @@ public class MainController  extends Application{
         FXMLLoader loader = new FXMLLoader(MainController.class.getResource("index.fxml"));
         Pane pane =  loader.load();
         IndexController indexController = loader.getController();
-        System.out.println("HEY!");
         indexController.setPrevStage(primaryStage);
         Scene scene = new Scene(pane);
         primaryStage.setScene(scene);
