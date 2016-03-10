@@ -3,15 +3,11 @@ package ux;
 
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import utils.Exercise;
 import utils.Time;
 import utils.Workout;
@@ -24,14 +20,19 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class FormController implements Initializable {
-
-    private Stage prevStage;
+public class FormController extends Controller implements Initializable {
 
 
-    public void setPrevStage(Stage prevStage) {
-        this.prevStage = prevStage;
-    }
+    @FXML private TextField dateField;
+    @FXML private TextField timeField;
+    @FXML private TextField tempField;
+    @FXML private TextField wField;
+    @FXML private ToggleButton outButton;
+    @FXML private ComboBox comboBox;
+    @FXML private TextField repField;
+    @FXML private TextField settField;
+    @FXML private TextField weightField;
+    @FXML private TableView table;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -57,16 +58,6 @@ public class FormController implements Initializable {
         }
     });
 
-    @FXML private TextField dateField;
-    @FXML private TextField timeField;
-    @FXML private TextField tempField;
-    @FXML private TextField wField;
-    @FXML private ToggleButton outButton;
-    @FXML private ComboBox comboBox;
-    @FXML private TextField repField;
-    @FXML private TextField settField;
-    @FXML private TextField weightField;
-    @FXML private TableView table;
 
     // Workout(int id, Date date, Time time, int duration, int performance, String log)
     @FXML
@@ -75,12 +66,12 @@ public class FormController implements Initializable {
         Date date = new Date(Integer.valueOf(dates[0]),Integer.valueOf(dates[1]),Integer.valueOf(dates[2]));
         Workout workout = new Workout(0,date,new Time("00:00:00"),1,0,""); //TODO: Endre slik at dette blir riktig
         MainController.dbConnect.createWorkout(workout);
-        changeScene();
+        changeSceneToIndex();
     }
 
     @FXML
     public void buttonRemove() throws IOException{
-        changeScene();
+        changeSceneToIndex();
     }
 
     @FXML
@@ -95,15 +86,9 @@ public class FormController implements Initializable {
     }
 
 
-    private void changeScene() throws IOException{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("index.fxml"));
-        Pane pane = loader.load();
-        IndexController controller =  loader.getController();
-        controller.setPrevStage(prevStage);
-        Scene scene = new Scene(pane);
-        prevStage.close();
-        prevStage.setScene(scene);
-        prevStage.show();
+    private void changeSceneToIndex() throws IOException{
+        changeScene("index.fxml");
+
     }
 
 

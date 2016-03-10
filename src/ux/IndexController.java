@@ -3,16 +3,10 @@ package ux;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import utils.Workout;
-import ux.test.Main;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,25 +14,21 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class IndexController implements Initializable {
+public class IndexController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
-    private Stage prevStage;
     @FXML private GridPane gridPane;
 
 
 
-    public void setPrevStage(Stage prevStage) {
-        this.prevStage = prevStage;
-    }
 
 
     @FXML
     public void button_registrer_ny_trening(ActionEvent actionEvent) throws IOException{
-        changeScene();
+        changeSceneToForm();
     }
 
 
@@ -65,28 +55,13 @@ public class IndexController implements Initializable {
         changeToWeekSummaryScene();
     }
 
-    private void changeScene() throws IOException{
-        Stage stage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("form.fxml"));
-        Pane pane = loader.load();
-        FormController controller =  loader.getController();
-        controller.setPrevStage(prevStage);
-        Scene scene = new Scene(pane);
-        stage.setScene(scene);
-        prevStage.close();
-        prevStage.setScene(scene);
-        prevStage.show();
+    private void changeSceneToForm() throws IOException{
+        changeScene("form.fxml");
+
     }
 
     private void changeToWeekSummaryScene() throws IOException{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("weeksummary.fxml"));
-        Pane pane = loader.load();
-        WeekSummaryController controller = loader.getController();
-        controller.setPrevStage(prevStage);
-        Scene scene = new Scene(pane);
-        prevStage.close();
-        prevStage.setScene(scene);
-        prevStage.show();
+        changeScene("weeksummary.fxml");
     }
 
 }
