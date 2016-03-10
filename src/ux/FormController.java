@@ -4,10 +4,7 @@ package ux;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import utils.Exercise;
 import utils.Time;
 import utils.Workout;
@@ -61,12 +58,20 @@ public class FormController extends Controller implements Initializable {
 
     // Workout(int id, Date date, Time time, int duration, int performance, String log)
     @FXML
-    public void button_legg_til() throws IOException{
+    public void submitButton() throws IOException{
         String[] dates = dateField.getText().split("/");
         Date date = new Date(Integer.valueOf(dates[0]),Integer.valueOf(dates[1]),Integer.valueOf(dates[2]));
         Workout workout = new Workout(0,date,new Time("00:00:00"),1,0,""); //TODO: Endre slik at dette blir riktig
         MainController.dbConnect.createWorkout(workout);
         changeSceneToIndex();
+    }
+
+
+
+    @FXML
+    public void button_legg_til(){
+        table.getItems().addAll("heisann!");
+        System.out.println(table.getItems());
     }
 
     @FXML

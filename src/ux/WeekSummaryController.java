@@ -1,5 +1,6 @@
 package ux;
 
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 
@@ -15,8 +16,14 @@ public class WeekSummaryController extends Controller implements Initializable {
 
     }
 
+
     private void changeSceneToIndex() throws IOException {
         changeScene("index.fxml");
+    }
+
+    @FXML
+    public void backButton() throws IOException{
+        changeSceneToIndex();
     }
 
 

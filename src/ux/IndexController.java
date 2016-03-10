@@ -22,10 +22,6 @@ public class IndexController extends Controller implements Initializable {
     }
     @FXML private GridPane gridPane;
 
-
-
-
-
     @FXML
     public void button_registrer_ny_trening(ActionEvent actionEvent) throws IOException{
         changeSceneToForm();
