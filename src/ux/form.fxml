@@ -10,7 +10,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ux.FormController">
     <children>
       <TilePane layoutY="43.0" prefHeight="178.0" prefWidth="400.0" style="-fx-background-color: #385056;" />
-        <Label alignment="CENTER" prefHeight="60.0" prefWidth="400.0" style="-fx-background-color: #344550;" text="Pumptastic" textFill="WHITE">
+        <Label alignment="CENTER" prefHeight="60.0" prefWidth="400.0" style="-fx-background-color: #344550;" text="Register ny trening" textFill="WHITE">
             <font>
                 <Font name="Avenir Next Regular" size="32.0" />
             </font>
@@ -68,8 +68,8 @@
             </TableView>
          </children>
       </VBox>
-      <ToggleButton fx:id="outButton" layoutX="10.0" layoutY="135.0" mnemonicParsing="false" onAction="#buttonToggle" prefHeight="27.0" prefWidth="173.0" text="Ute" />
-      <TextField fx:id="dateField" layoutX="80.0" layoutY="75.0" prefHeight="30.0" prefWidth="110.0" promptText="Dato " stylesheets="@assets/textfield.css">
+      <ToggleButton fx:id="outButton" layoutX="10.0" layoutY="129.0" mnemonicParsing="false" onAction="#buttonToggle" prefHeight="27.0" prefWidth="173.0" text="Ute" />
+      <TextField fx:id="dateField" layoutX="80.0" layoutY="65.0" prefHeight="30.0" prefWidth="110.0" promptText="Dato " stylesheets="@assets/textfield.css">
          <font>
             <Font name="Avenir Roman" size="13.0" />
          </font>
@@ -87,5 +87,9 @@
             <Font name="Avenir Roman" size="13.0" />
          </font>
       </TextField>
+      <Button layoutX="3.0" layoutY="16.0" mnemonicParsing="false" text="Avbryt" />
+      <Button layoutX="342.0" layoutY="16.0" mnemonicParsing="false" text="Lagre" />
+      <TextField layoutX="10.0" layoutY="100.0" promptText="Form" />
+      <TextField layoutX="10.0" layoutY="160.0" promptText="Beskrivelse/log" />
     </children>
 </AnchorPane>
