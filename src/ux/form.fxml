@@ -27,17 +27,17 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
                      </padding>
                      <children>
-                        <TextField prefHeight="27.0" prefWidth="163.0" promptText="Navn på øvelse" stylesheets="@assets/textfield.css">
-                           <font>
-                              <Font name="Avenir Roman" size="13.0" />
-                           </font>
-                        </TextField>
-                        <TextField prefHeight="27.0" prefWidth="100.0" promptText="Repetisjoner" stylesheets="@assets/textfield.css">
+                        <TextField prefHeight="27.0" prefWidth="163.0" promptText="Repitisjoner" stylesheets="@assets/textfield.css">
                            <font>
                               <Font name="Avenir Roman" size="13.0" />
                            </font>
                         </TextField>
                         <TextField prefHeight="27.0" prefWidth="100.0" promptText="Sett" stylesheets="@assets/textfield.css">
+                           <font>
+                              <Font name="Avenir Roman" size="13.0" />
+                           </font>
+                        </TextField>
+                        <TextField prefHeight="27.0" prefWidth="100.0" promptText="Vekt" stylesheets="@assets/textfield.css">
                            <font>
                               <Font name="Avenir Roman" size="13.0" />
                            </font>
@@ -57,9 +57,10 @@
             </VBox>
             <TableView prefHeight="284.0" prefWidth="415.0" stylesheets="@assets/tableview.css">
               <columns>
-                <TableColumn editable="false" maxWidth="240.4986789226532" prefWidth="212.60755038261414" text="Navn" />
-                <TableColumn editable="false" maxWidth="280.5509948730469" minWidth="0.0" prefWidth="106.39244079589844" text="Repetisjoner" />
-                  <TableColumn editable="false" maxWidth="264.0453929901123" text="Sett" />
+                <TableColumn editable="false" maxWidth="240.4986789226532" prefWidth="138.0" text="Navn" />
+                <TableColumn editable="false" maxWidth="280.5509948730469" minWidth="0.0" prefWidth="102.0" text="Repitisjoner" />
+                  <TableColumn editable="false" maxWidth="264.0453929901123" prefWidth="74.0" text="Sett" />
+                  <TableColumn editable="false" maxWidth="264.0453929901123" prefWidth="85.0" text="Vekt" />
               </columns>
                <VBox.margin>
                   <Insets top="10.0" />
@@ -67,10 +68,23 @@
             </TableView>
          </children>
       </VBox>
-      <ToggleButton layoutX="110.0" layoutY="157.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="173.0" text="Ute" />
-      <TextField layoutX="10.0" layoutY="77.0" prefHeight="40.0" prefWidth="380.0" promptText="Navn på trening" stylesheets="@assets/textfield.css">
+      <ToggleButton layoutX="10.0" layoutY="135.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="173.0" text="Ute" />
+      <TextField layoutX="80.0" layoutY="75.0" prefHeight="30.0" prefWidth="110.0" promptText="Dato " stylesheets="@assets/textfield.css">
          <font>
-            <Font name="Avenir Roman" size="18.0" />
+            <Font name="Avenir Roman" size="13.0" />
+         </font>
+      </TextField>
+      <TextField layoutX="204.0" layoutY="116.0" promptText="Temperatur" stylesheets="@assets/textfield.css" />
+      <ComboBox layoutX="145.0" layoutY="188.0" prefHeight="27.0" prefWidth="227.0" />
+      <Label layoutX="11.0" layoutY="185.0" prefHeight="32.0" prefWidth="173.0" text="Velg øvelse:" textFill="WHITE">
+         <font>
+            <Font name="Avenir Roman" size="22.0" />
+         </font>
+      </Label>
+      <TextField layoutX="205.0" layoutY="153.0" promptText="Værforhold" stylesheets="@assets/textfield.css" />
+      <TextField layoutX="211.0" layoutY="75.0" prefHeight="30.0" prefWidth="110.0" promptText="Tidspunkt" stylesheets="@assets/textfield.css">
+         <font>
+            <Font name="Avenir Roman" size="13.0" />
          </font>
       </TextField>
     </children>
