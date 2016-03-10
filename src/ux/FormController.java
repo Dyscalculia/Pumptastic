@@ -96,18 +96,15 @@ public class FormController implements Initializable {
 
 
     private void changeScene() throws IOException{
-        Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("index.fxml"));
         Pane pane = loader.load();
         IndexController controller =  loader.getController();
         controller.setPrevStage(prevStage);
         Scene scene = new Scene(pane);
-        stage.setScene(scene);
         prevStage.close();
         prevStage.setScene(scene);
         prevStage.show();
     }
-
 
 
 }

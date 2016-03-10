@@ -24,7 +24,6 @@ public class IndexController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        buttonShowAll();
 
     }
     private Stage prevStage;
@@ -62,14 +61,8 @@ public class IndexController implements Initializable {
 
     }
     @FXML
-    public void buttonShowAll(){
-        try{
-            setGridPaneElements(MainController.dbConnect.getWorkouts());
-
-        }catch (SQLException e){
-            System.out.println(e.getStackTrace());
-        }
-
+    public void weekSummary()throws IOException{
+        changeToWeekSummaryScene();
     }
 
     private void changeScene() throws IOException{
@@ -84,4 +77,16 @@ public class IndexController implements Initializable {
         prevStage.setScene(scene);
         prevStage.show();
     }
+
+    private void changeToWeekSummaryScene() throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("weeksummary.fxml"));
+        Pane pane = loader.load();
+        WeekSummaryController controller = loader.getController();
+        controller.setPrevStage(prevStage);
+        Scene scene = new Scene(pane);
+        prevStage.close();
+        prevStage.setScene(scene);
+        prevStage.show();
+    }
+
 }
