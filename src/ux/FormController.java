@@ -12,9 +12,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import utils.Exercise;
+import utils.Time;
+import utils.Workout;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,7 +36,14 @@ public class FormController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         dateField.textProperty().addListener(dateFieldListener);
-        
+        try {
+            List<Exercise> exercises = MainController.dbConnect.getExercises(0);
+            comboBox.getItems().addAll("hei","hopp");
+            comboBox.getSelectionModel().selectFirst();
+        }catch (Exception e){
+            System.out.println(e.getStackTrace());
+        }
+
     }
 
     private static final Pattern dateFormat = Pattern.compile("[0-9]{1,2}/[0-9]{1,2}/[0-9]{2}");
@@ -56,13 +68,19 @@ public class FormController implements Initializable {
     @FXML private TextField weightField;
     @FXML private TableView table;
 
+    // Workout(int id, Date date, Time time, int duration, int performance, String log)
     @FXML
     public void button_legg_til() throws IOException{
+        String[] dates = dateField.getText().split("/");
+        Date date = new Date(Integer.valueOf(dates[0]),Integer.valueOf(dates[1]),Integer.valueOf(dates[2]));
+        Workout workout = new Workout(0,date,new Time("00:00:00"),1,0,""); //TODO: Endre slik at dette blir riktig
+        MainController.dbConnect.createWorkout(workout);
         changeScene();
     }
 
-    public void buttonRemove(){
-
+    @FXML
+    public void buttonRemove() throws IOException{
+        changeScene();
     }
 
     @FXML
@@ -73,13 +91,8 @@ public class FormController implements Initializable {
         }else{
             tempField.setPromptText("Temperatur");
             wField.setPromptText("Værforhold");
-
         }
-
     }
-
-
-
 
 
     private void changeScene() throws IOException{
