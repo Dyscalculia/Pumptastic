@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 public class MainController  extends Application{
 
-    private static final DBConnect dbConnect = new DBConnectMock();
+    public static final DBConnect dbConnect = new DBConnectMock();
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(MainController.class.getResource("index.fxml"));

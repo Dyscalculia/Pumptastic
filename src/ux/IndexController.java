@@ -6,11 +6,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import utils.Workout;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class IndexController implements Initializable {
@@ -18,8 +23,11 @@ public class IndexController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+
     }
     private Stage prevStage;
+    @FXML private GridPane gridPane;
+
 
 
     public void setPrevStage(Stage prevStage) {
@@ -32,6 +40,23 @@ public class IndexController implements Initializable {
         changeScene();
     }
 
+
+    @FXML
+    public void buttonGetTopTen(){
+        gridPane.getChildren().clear();
+    }
+    @FXML
+    public void buttonShowAll(){
+        gridPane.getChildren().clear();
+        try {
+            int maxSize = MainController.dbConnect.getWorkouts().size();
+            for (int index = 0;index<maxSize;index++){
+                gridPane.add(new Label("TODO LEGG TIL NOE"),0,index);
+            }
+        }catch (SQLException e){
+            System.out.println(e.getStackTrace());
+        }
+    }
 
     private void changeScene() throws IOException{
         Stage stage = new Stage();
