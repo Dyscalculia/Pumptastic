@@ -11,7 +11,7 @@
    <children>
       <ScrollPane hmax="0.0" layoutY="118.0" prefHeight="500.0" prefWidth="400.0" stylesheets="@assets/scrollpane.css">
          <content>
-            <GridPane prefHeight="200.0" prefWidth="400.0">
+            <GridPane fx:id="gridPane" prefHeight="200.0" prefWidth="400.0">
               <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
@@ -39,5 +39,7 @@
          </effect>
       </Label>
       <Button layoutX="5.0" layoutY="70.0" mnemonicParsing="false" onAction="#button_registrer_ny_trening" prefHeight="35.0" prefWidth="390.0" stylesheets="@assets/button.css" text="+ Registrer ny trening" />
+      <Button layoutX="24.0" layoutY="17.0" mnemonicParsing="false" onAction="#buttonGetTopTen" text="Top10" />
+      <Button layoutX="316.0" layoutY="17.0" mnemonicParsing="false" onAction="#buttonShowAll" text="All" />
    </children>
 </AnchorPane>
