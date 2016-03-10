@@ -39,7 +39,7 @@
          </effect>
       </Label>
       <Button layoutX="5.0" layoutY="70.0" mnemonicParsing="false" onAction="#button_registrer_ny_trening" prefHeight="35.0" prefWidth="390.0" stylesheets="@assets/button.css" text="+ Registrer ny trening" />
-      <Button layoutX="24.0" layoutY="17.0" mnemonicParsing="false" onAction="#buttonGetTopTen" text="Top10" />
-      <Button layoutX="316.0" layoutY="17.0" mnemonicParsing="false" onAction="#buttonShowAll" text="All" />
+      <Button layoutX="27.0" layoutY="17.0" mnemonicParsing="false" onAction="#buttonGetTopTen" text="Top10" />
+      <Button layoutX="284.0" layoutY="17.0" mnemonicParsing="false" onAction="#buttonShowAll" text="Week summary" />
    </children>
 </AnchorPane>
