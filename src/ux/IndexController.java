@@ -12,10 +12,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import utils.Workout;
+import ux.test.Main;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class IndexController implements Initializable {
@@ -43,19 +45,31 @@ public class IndexController implements Initializable {
 
     @FXML
     public void buttonGetTopTen(){
-        gridPane.getChildren().clear();
-    }
-    @FXML
-    public void buttonShowAll(){
-        gridPane.getChildren().clear();
-        try {
-            int maxSize = MainController.dbConnect.getWorkouts().size();
-            for (int index = 0;index<maxSize;index++){
-                gridPane.add(new Label("TODO LEGG TIL NOE"),0,index);
-            }
+        try{
+            setGridPaneElements(MainController.dbConnect.getWorkouts()); //TODO: Endre getWorkouts til topTen...
+
         }catch (SQLException e){
             System.out.println(e.getStackTrace());
         }
+    }
+
+    private void setGridPaneElements(List<Workout> workouts){
+        gridPane.getChildren().clear();
+        int maxSize = workouts.size();
+        for (int index = 0;index<maxSize;index++){
+            gridPane.add(new Label("TODO LEGG TIL NOE"),0,index);
+        }
+
+    }
+    @FXML
+    public void buttonShowAll(){
+        try{
+            setGridPaneElements(MainController.dbConnect.getWorkouts());
+
+        }catch (SQLException e){
+            System.out.println(e.getStackTrace());
+        }
+
     }
 
     private void changeScene() throws IOException{
