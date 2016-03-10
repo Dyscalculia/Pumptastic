@@ -27,14 +27,10 @@ public class IndexController implements Initializable {
     }
 
 
-
-
-
     @FXML
     public void button_registrer_ny_trening(ActionEvent actionEvent) throws IOException{
         changeScene();
     }
-
 
 
     private void changeScene() throws IOException{
