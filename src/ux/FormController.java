@@ -5,9 +5,11 @@ import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import utils.Exercise;
 import utils.Time;
 import utils.Workout;
+import ux.test.Product;
 
 import java.io.IOException;
 import java.net.URL;
@@ -30,6 +32,8 @@ public class FormController extends Controller implements Initializable {
     @FXML private TextField settField;
     @FXML private TextField weightField;
     @FXML private TableView table;
+    @FXML private TextField formField;
+    @FXML private TextField logField;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -70,8 +74,8 @@ public class FormController extends Controller implements Initializable {
 
     @FXML
     public void button_legg_til(){
-        table.getItems().addAll("heisann!");
-        System.out.println(table.getItems());
+        table.getColumns().stream().forEach(a-> System.out.println(a.getClass()));
+
     }
 
     @FXML
@@ -91,9 +95,18 @@ public class FormController extends Controller implements Initializable {
     }
 
 
-    private void changeSceneToIndex() throws IOException{
+    private void changeSceneToIndex() throws IOException {
         changeScene("index.fxml");
 
+    }
+
+    @FXML
+    public void cancelButton()throws IOException{
+        changeSceneToIndex();
+    }
+    @FXML
+    public void saveButton() throws IOException{
+        submitButton();
     }
 
 

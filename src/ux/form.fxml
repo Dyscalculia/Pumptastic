@@ -87,9 +87,9 @@
             <Font name="Avenir Roman" size="13.0" />
          </font>
       </TextField>
-      <Button layoutX="3.0" layoutY="16.0" mnemonicParsing="false" text="Avbryt" />
-      <Button layoutX="342.0" layoutY="16.0" mnemonicParsing="false" text="Lagre" />
-      <TextField layoutX="10.0" layoutY="100.0" promptText="Form" />
-      <TextField layoutX="10.0" layoutY="160.0" promptText="Beskrivelse/log" />
+      <Button layoutX="3.0" layoutY="16.0" mnemonicParsing="false" onAction="#cancelButton" text="Avbryt" />
+      <Button layoutX="342.0" layoutY="16.0" mnemonicParsing="false" onAction="#saveButton" text="Lagre" />
+      <TextField fx:id="formField" layoutX="10.0" layoutY="100.0" promptText="Form" />
+      <TextField fx:id="logField" layoutX="10.0" layoutY="160.0" promptText="Beskrivelse/log" />
     </children>
 </AnchorPane>
