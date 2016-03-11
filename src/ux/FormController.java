@@ -168,11 +168,11 @@ public class FormController extends Controller implements Initializable {
         submitButton();
     }
 
-    private void setTextFieldWrong(TextField textField){ //TODO: VEBJØRN HER!
+    private void setTextFieldWrong(TextField textField){
         textField.setStyle("-fx-background-color: #DD1C1A; -fx-prompt-text-fill: white");
     }
 
-    private void setTextFieldRight(TextField textField){ //TODO: HER OGSÅÅ!!! VEBJØRN
+    private void setTextFieldRight(TextField textField){
         textField.setStyle("-fx-background-color: white");
     }
 
