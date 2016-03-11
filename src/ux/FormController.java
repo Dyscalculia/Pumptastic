@@ -177,6 +177,7 @@ public class FormController extends Controller implements Initializable {
         settField.textProperty().addListener(settFieldListener);
         weightField.textProperty().addListener(weightFieldListener);
         timeField.textProperty().addListener(timeFieldListener);
+        formField.textProperty().addListener(formFieldListener);
 
         //legger til hva som er påkrevd
         setTextFieldWrong(dateField);

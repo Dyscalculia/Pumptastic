@@ -18,6 +18,7 @@ public class IndexController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        setDefaultGridPaneElements();
 
     }
     @FXML private GridPane gridPane;
@@ -39,12 +40,15 @@ public class IndexController extends Controller implements Initializable {
     }
 
     private void setGridPaneElements(List<Workout> workouts){
-        gridPane.getChildren().clear();
-        int maxSize = workouts.size();
-        for (int index = 0;index<maxSize;index++){
-            gridPane.add(new Label("TODO LEGG TIL NOE"),0,index);
-        }
+        setGridPaneElements(gridPane,workouts);
+    }
 
+    private void setDefaultGridPaneElements(){
+        try{
+            setGridPaneElements(MainController.dbConnect.getWorkouts());
+        }catch (Exception e){
+            System.out.println(e.getStackTrace());
+        }
     }
     @FXML
     public void weekSummary()throws IOException{

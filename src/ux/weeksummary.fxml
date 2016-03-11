@@ -59,17 +59,17 @@
             <Font name="Avenir Roman" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="57.0" layoutY="87.0" text="5" textFill="WHITE">
+      <Label fx:id="amountLabel" layoutX="57.0" layoutY="87.0" text="5" textFill="WHITE">
          <font>
             <Font name="Avenir Roman" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="143.0" layoutY="86.0" text="16 timer" textFill="WHITE">
+      <Label fx:id="hourLabel" layoutX="143.0" layoutY="86.0" text="16 timer" textFill="WHITE">
          <font>
             <Font name="Avenir Roman" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="263.0" layoutY="86.0" text="44 minutter" textFill="WHITE">
+      <Label fx:id="minuteLabel" layoutX="263.0" layoutY="86.0" text="44 minutter" textFill="WHITE">
          <font>
             <Font name="Avenir Roman" size="20.0" />
          </font>
