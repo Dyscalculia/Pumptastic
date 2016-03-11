@@ -169,7 +169,7 @@ public class FormController extends Controller implements Initializable {
     }
 
     private void setTextFieldWrong(TextField textField){ //TODO: VEBJØRN HER!
-        textField.setStyle("-fx-background-color: red");
+        textField.setStyle("-fx-background-color: #DD1C1A; -fx-prompt-text-fill: white");
     }
 
     private void setTextFieldRight(TextField textField){ //TODO: HER OGSÅÅ!!! VEBJØRN
