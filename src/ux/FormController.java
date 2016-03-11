@@ -5,6 +5,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import utils.Exercise;
@@ -39,7 +40,7 @@ public class FormController extends Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setupTable();
-        dateField.textProperty().addListener(dateFieldListener);
+        setupListeners();
         try {
             List<Exercise> exercises = MainController.dbConnect.getExercises(0);
             comboBox.getItems().addAll("hei","hopp"); //TODO: Legg til exercises navn istedet for hei hopp
@@ -152,24 +153,68 @@ public class FormController extends Controller implements Initializable {
     public void saveButton() throws IOException{
         submitButton();
     }
+    private void setTextFieldWrong(TextField textField){ //TODO: VEBJØRN HER!
+        textField.setStyle("-fx-background-color: red");
+    }
+    private void setTextFieldRight(TextField textField){ //TODO: HER OGSÅÅ!!! VEBJØRN
+        textField.setStyle("-fx-background-color: white");
+    }
 
 
 
 
 
 
-
-
+    private void setupListeners(){
+        dateField.textProperty().addListener(dateFieldListener);
+        repField.textProperty().addListener(repFieldListener);
+        settField.textProperty().addListener(settFieldListener);
+        weightField.textProperty().addListener(weightFieldListener);
+    }
 
     private static final Pattern dateFormat = Pattern.compile("[0-9]{1,2}/[0-9]{1,2}/[0-9]{2}");
     private ChangeListener<? super String> dateFieldListener = ((observable, oldValue, newValue) -> {
         if(matcher(dateFormat,newValue)){
-            //TODO: LEGG TIL RIKIT I LABEL!!! Vebjørn.
+            setTextFieldRight(dateField);
         }
         else {
-            //TODO: LEGG TIL FEIL I LABEL!! Vebjørn.
+            setTextFieldWrong(dateField);
         }
     });
+
+    private ChangeListener<? super String> repFieldListener = ((observable, oldValue, newValue) -> {
+        if(isValidRepField()){
+            setTextFieldRight(repField);
+        }
+        else{
+            setTextFieldWrong(repField);
+        }
+    });
+    private ChangeListener<? super String> settFieldListener = ((observable, oldValue, newValue) -> {
+       if(isValidSettField()){
+           setTextFieldRight(settField);
+       }else{
+           setTextFieldWrong(settField);
+       }
+    });
+    private ChangeListener<? super String> weightFieldListener =((observable, oldValue, newValue) -> {
+       if(isValidWeightField()){
+           setTextFieldRight(weightField);
+       }else{
+           setTextFieldWrong(weightField);
+       }
+    });
+    private ChangeListener<? super String> timeFieldListener = ((observable, oldValue, newValue) -> {
+        
+    });
+
+
+
+
+
+
+
+
 
 
 
