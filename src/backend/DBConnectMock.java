@@ -1,6 +1,8 @@
 package backend;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import utils.Group;
@@ -11,7 +13,8 @@ public class DBConnectMock implements DBConnect {
 
     @Override
     public List<Workout> getWorkouts() throws SQLException {
-        return null;
+        Workout[] array = new Workout[10];
+        return new ArrayList<>(Arrays.asList(array));
     }
 
     @Override

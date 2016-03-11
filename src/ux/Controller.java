@@ -1,21 +1,22 @@
 package ux;
-import backend.DBConnect;
-import backend.DBConnectMock;
-import javafx.application.Application;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 
-public class MainController  extends Application{
+public abstract class Controller {
 
-    public static final DBConnect dbConnect = new DBConnectMock();
-    @Override
-    public void start(Stage prevStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("index.fxml"));
+    protected Stage prevStage;
+
+    public void setPrevStage(Stage prevStage) {
+        this.prevStage = prevStage;
+    }
+
+    protected void changeScene(String name) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(name));
         Pane pane = loader.load();
         Controller controller =  loader.getController();
         controller.setPrevStage(prevStage);
@@ -24,7 +25,4 @@ public class MainController  extends Application{
         prevStage.setScene(scene);
         prevStage.show();
     }
-
-
-
 }
