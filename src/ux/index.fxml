@@ -9,7 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ux.IndexController">
    <children>
-      <ScrollPane hmax="0.0" layoutY="118.0" prefHeight="500.0" prefWidth="400.0" stylesheets="@assets/scrollpane.css">
+      <ScrollPane hmax="0.0" layoutY="169.0" prefHeight="449.0" prefWidth="400.0" stylesheets="@assets/scrollpane.css">
          <content>
             <GridPane fx:id="gridPane" prefHeight="200.0" prefWidth="400.0">
               <columnConstraints>
@@ -29,7 +29,7 @@
                </opaqueInsets>
             </GridPane>
          </content></ScrollPane>
-      <TilePane layoutY="60.0" prefHeight="61.0" prefWidth="400.0" style="-fx-background-color: #385056;" />
+      <TilePane layoutY="60.0" prefHeight="109.0" prefWidth="400.0" style="-fx-background-color: #385056;" />
       <Label alignment="CENTER" prefHeight="60.0" prefWidth="400.0" style="-fx-background-color: #344550;" text="Pumptastic" textFill="WHITE">
          <font>
             <Font name="Avenir Next Regular" size="32.0" />
@@ -38,8 +38,14 @@
             <DropShadow blurType="GAUSSIAN" height="5.0" offsetX="0.5" offsetY="0.5" radius="0.75" width="0.0" />
          </effect>
       </Label>
-      <Button layoutX="5.0" layoutY="70.0" mnemonicParsing="false" onAction="#button_registrer_ny_trening" prefHeight="35.0" prefWidth="390.0" stylesheets="@assets/button.css" text="+ Registrer ny trening" />
-      <Button layoutX="27.0" layoutY="17.0" mnemonicParsing="false" onAction="#buttonGetTopTen" text="Top10" />
-      <Button layoutX="284.0" layoutY="17.0" mnemonicParsing="false" onAction="#weekSummary" text="Week summary" />
+      <Button layoutX="5.0" layoutY="123.0" mnemonicParsing="false" onAction="#button_registrer_ny_trening" prefHeight="35.0" prefWidth="390.0" stylesheets="@assets/button.css" text="+ Registrer ny trening" />
+      <Button layoutX="40.0" layoutY="70.0" mnemonicParsing="false" onAction="#buttonGetTopTen" prefHeight="40.0" prefWidth="150.0" stylesheets="@assets/gobuttons.css" text="Topp ti ">
+         <font>
+            <Font size="18.0" />
+         </font></Button>
+      <Button layoutX="208.0" layoutY="70.0" mnemonicParsing="false" onAction="#weekSummary" prefHeight="40.0" prefWidth="150.0" stylesheets="@assets/gobuttons.css" text="Ukesammendrag">
+         <font>
+            <Font size="18.0" />
+         </font></Button>
    </children>
 </AnchorPane>

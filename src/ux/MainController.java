@@ -24,7 +24,4 @@ public class MainController  extends Application{
         prevStage.setScene(scene);
         prevStage.show();
     }
-
-
-
 }

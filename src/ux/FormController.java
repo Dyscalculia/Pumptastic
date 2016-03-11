@@ -34,7 +34,7 @@ public class FormController extends Controller implements Initializable {
     @FXML private TextField weightField;
     @FXML private TableView table;
     @FXML private TextField formField;
-    @FXML private TextField logField;
+    @FXML private TextArea logField;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -42,7 +42,7 @@ public class FormController extends Controller implements Initializable {
         setupListeners();
         try {
             List<Exercise> exercises = MainController.dbConnect.getExercises(0);
-            comboBox.getItems().addAll("hei","hopp"); //TODO: Legg til exercises navn istedet for hei hopp
+            comboBox.getItems().addAll("hei","hopp","dette", "var", "jo", "kjempe", "gøy"); //TODO: Legg til exercises navn istedet for hei hopp
             comboBox.getSelectionModel().selectFirst();
         }catch (Exception e){
             System.out.println(Arrays.toString(e.getStackTrace()));
@@ -131,6 +131,7 @@ public class FormController extends Controller implements Initializable {
 
         table.getColumns().clear();
         table.getColumns().addAll(nameColumn,repColumn,settColumn,weightColumn);
+        table.setPlaceholder(new Label("Du har ikke lagt inn noen øvelser"));
     }
 
     @FXML
@@ -144,11 +145,11 @@ public class FormController extends Controller implements Initializable {
     @FXML
     public void buttonToggle(){
         if(outButton.isSelected()){
-            tempField.setPromptText("Luft");
-            wField.setPromptText("Tilskuere");
-        }else{
             tempField.setPromptText("Temperatur");
             wField.setPromptText("Værforhold");
+        }else{
+            tempField.setPromptText("Tilskuere");
+            wField.setPromptText("Luftforhold");
         }
     }
 

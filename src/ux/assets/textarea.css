@@ -1,0 +1,10 @@
+.text-area,
+.text-area:focused {
+    -fx-background-color: transparent, white;
+    -fx-background-insets: 0 0 0 0, 0 0 0 0;
+    -fx-border-radius: 0;
+    -fx-border-color: none;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+
+}

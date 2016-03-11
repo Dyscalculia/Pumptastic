@@ -79,6 +79,6 @@
             <Font name="Avenir Roman" size="26.0" />
          </font>
       </Label>
-      <Button layoutX="5.0" layoutY="15.0" mnemonicParsing="false" onAction="#backButton" text="Tilbake" />
+      <Button layoutX="15.0" layoutY="15.0" mnemonicParsing="false" onAction="#backButton" stylesheets="@assets/utilitybutton.css" text="Tilbake" />
     </children>
 </AnchorPane>

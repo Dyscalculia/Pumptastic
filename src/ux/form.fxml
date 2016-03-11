@@ -9,16 +9,16 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ux.FormController">
     <children>
-      <TilePane layoutY="43.0" prefHeight="178.0" prefWidth="400.0" style="-fx-background-color: #385056;" />
-        <Label alignment="CENTER" prefHeight="60.0" prefWidth="400.0" style="-fx-background-color: #344550;" text="Register ny trening" textFill="WHITE">
+      <TilePane layoutY="43.0" prefHeight="264.0" prefWidth="400.0" style="-fx-background-color: #385056;" />
+        <Label alignment="CENTER" prefHeight="60.0" prefWidth="400.0" style="-fx-background-color: #344550;" text="Registrer ny trening" textFill="WHITE">
             <font>
-                <Font name="Avenir Next Regular" size="32.0" />
+                <Font name="Avenir Next Regular" size="26.0" />
             </font>
             <effect>
                 <DropShadow blurType="GAUSSIAN" height="5.0" offsetX="0.5" offsetY="0.5" radius="0.75" width="0.0" />
             </effect>
         </Label>
-      <VBox layoutY="220.0" prefHeight="380.0" prefWidth="400.0" style="-fx-background-color: #385056;">
+      <VBox layoutY="306.0" prefHeight="294.0" prefWidth="400.0" style="-fx-background-color: #385056;">
          <children>
             <VBox>
                <children>
@@ -57,10 +57,10 @@
             </VBox>
             <TableView fx:id="table" prefHeight="284.0" prefWidth="415.0" stylesheets="@assets/tableview.css">
               <columns>
-                <TableColumn editable="false" maxWidth="240.4986789226532" prefWidth="138.0" text="Navn" />
-                <TableColumn editable="false" maxWidth="280.5509948730469" minWidth="0.0" prefWidth="102.0" text="Repitisjoner" />
-                  <TableColumn editable="false" maxWidth="264.0453929901123" prefWidth="74.0" text="Sett" />
-                  <TableColumn editable="false" maxWidth="264.0453929901123" prefWidth="85.0" text="Vekt" />
+                <TableColumn editable="false" maxWidth="240.4986789226532" prefWidth="138.0" resizable="false" text="Navn" />
+                <TableColumn editable="false" maxWidth="280.5509948730469" minWidth="0.0" prefWidth="102.0" resizable="false" text="Repitisjoner" />
+                  <TableColumn editable="false" maxWidth="264.0453929901123" prefWidth="74.0" resizable="false" text="Sett" />
+                  <TableColumn editable="false" maxWidth="264.0453929901123" prefWidth="85.0" resizable="false" text="Vekt" />
               </columns>
                <VBox.margin>
                   <Insets top="10.0" />
@@ -68,28 +68,31 @@
             </TableView>
          </children>
       </VBox>
-      <ToggleButton fx:id="outButton" layoutX="10.0" layoutY="129.0" mnemonicParsing="false" onAction="#buttonToggle" prefHeight="27.0" prefWidth="173.0" text="Ute" />
-      <TextField fx:id="dateField" layoutX="80.0" layoutY="65.0" prefHeight="30.0" prefWidth="110.0" promptText="Dato " stylesheets="@assets/textfield.css">
+      <ToggleButton fx:id="outButton" layoutX="113.0" layoutY="108.0" mnemonicParsing="false" onAction="#buttonToggle" prefHeight="27.0" prefWidth="173.0" stylesheets="@assets/togglebutton.css" text="Ute">
+         <font>
+            <Font name="Avenir Roman" size="14.0" />
+         </font></ToggleButton>
+      <TextField fx:id="dateField" layoutX="29.0" layoutY="70.0" prefHeight="30.0" prefWidth="114.0" promptText="Dato " stylesheets="@assets/textfield.css">
          <font>
             <Font name="Avenir Roman" size="13.0" />
          </font>
       </TextField>
-      <TextField fx:id="tempField" layoutX="204.0" layoutY="116.0" promptText="Temperatur" stylesheets="@assets/textfield.css" />
-      <ComboBox fx:id="comboBox" layoutX="145.0" layoutY="188.0" prefHeight="27.0" prefWidth="227.0" />
-      <Label layoutX="11.0" layoutY="185.0" prefHeight="32.0" prefWidth="173.0" text="Velg øvelse:" textFill="WHITE">
+      <TextField fx:id="tempField" layoutX="31.0" layoutY="148.0" promptText="Temperatur" stylesheets="@assets/textfield.css" />
+      <ComboBox fx:id="comboBox" layoutX="145.0" layoutY="268.0" prefHeight="27.0" prefWidth="227.0" stylesheets="@assets/combobox.css" />
+      <Label layoutX="11.0" layoutY="265.0" prefHeight="32.0" prefWidth="173.0" text="Velg øvelse:" textFill="WHITE">
          <font>
             <Font name="Avenir Roman" size="22.0" />
          </font>
       </Label>
-      <TextField fx:id="wField" layoutX="205.0" layoutY="153.0" promptText="Værforhold" stylesheets="@assets/textfield.css" />
-      <TextField fx:id="timeField" layoutX="211.0" layoutY="75.0" prefHeight="30.0" prefWidth="110.0" promptText="Tidspunkt" stylesheets="@assets/textfield.css">
+      <TextField fx:id="wField" layoutX="203.0" layoutY="148.0" promptText="Værforhold" stylesheets="@assets/textfield.css" />
+      <TextField fx:id="timeField" layoutX="148.0" layoutY="70.0" prefHeight="30.0" prefWidth="110.0" promptText="Tidspunkt" stylesheets="@assets/textfield.css">
          <font>
             <Font name="Avenir Roman" size="13.0" />
          </font>
       </TextField>
-      <Button layoutX="3.0" layoutY="16.0" mnemonicParsing="false" onAction="#cancelButton" text="Avbryt" />
-      <Button layoutX="342.0" layoutY="16.0" mnemonicParsing="false" onAction="#saveButton" text="Lagre" />
-      <TextField fx:id="formField" layoutX="10.0" layoutY="100.0" promptText="Form" />
-      <TextField fx:id="logField" layoutX="10.0" layoutY="160.0" promptText="Beskrivelse/log" />
+      <Button layoutX="10.0" layoutY="15.0" mnemonicParsing="false" onAction="#cancelButton" stylesheets="@assets/utilitybutton.css" text="Avbryt" />
+      <Button layoutX="332.0" layoutY="15.0" mnemonicParsing="false" onAction="#saveButton" prefHeight="11.0" prefWidth="58.0" stylesheets="@assets/utilitybutton.css" text="Lagre" />
+      <TextField fx:id="formField" layoutX="263.0" layoutY="70.0" prefHeight="30.0" prefWidth="110.0" promptText="Form 1-10" stylesheets="@assets/textfield.css" />
+      <TextArea fx:id="logField" layoutX="31.0" layoutY="185.0" prefHeight="73.0" prefWidth="339.0" promptText="Beskrivelse av treningen" stylesheets="@assets/textarea.css" />
     </children>
 </AnchorPane>

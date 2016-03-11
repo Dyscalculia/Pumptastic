@@ -1,0 +1,17 @@
+.toggle-button {
+    -fx-text-fill: white;
+    -fx-base: #1B98E0;
+    -fx-background: #1B98E0;
+    -fx-focus-color: transparent;
+    -fx-border-color: transparent;
+    -fx-effect: null;
+}
+
+.toggle-button:selected {
+    -fx-text-fill: white;
+    -fx-base: #006494;
+    -fx-background: #006494;
+    -fx-focus-color: transparent;
+    -fx-border-color: transparent;
+    -fx-effect: null;
+}
