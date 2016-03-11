@@ -56,11 +56,17 @@ public class FormController extends Controller implements Initializable {
     // Workout(int id, Date date, Time time, int duration, int performance, String log)
     @FXML
     public void submitButton() throws IOException{
-        String[] dates = dateField.getText().split("/");
-        Date date = new Date(Integer.valueOf(dates[0]),Integer.valueOf(dates[1]),Integer.valueOf(dates[2]));
-        Workout workout = new Workout(0,date,new Time("00:00:00"),1,0,""); //TODO: Endre slik at dette blir riktig
-        MainController.dbConnect.createWorkout(workout);
-        changeSceneToIndex();
+        if(isValidFormField() && isValidRepField() && isValidTimeFIeld() && isValidWeightField() && isValidSettField() && isValidDateField()
+                ) {
+            String[] dates = dateField.getText().split("/");
+            Date date = new Date(Integer.valueOf(dates[0]), Integer.valueOf(dates[1]), Integer.valueOf(dates[2]));
+            Workout workout = new Workout(0, date, new Time("00:00:00"), 1, 0, ""); //TODO: Endre slik at dette blir riktig
+            MainController.dbConnect.createWorkout(workout);
+            changeSceneToIndex();
+        }
+        else {
+            //TODO: Kan ha noe feedback når submitter at et eller annet felt er feil... Vejbørn.
+        }
     }
 
     private boolean matcher(Pattern pattern, String string){
@@ -82,6 +88,9 @@ public class FormController extends Controller implements Initializable {
     }
     private boolean isValidFormField(){
         return matcher(numberPattern,formField.getText());
+    }
+    private boolean isValidDateField(){
+        return matcher(dateFormat,dateField.getText());
     }
 
     @FXML
@@ -190,7 +199,7 @@ public class FormController extends Controller implements Initializable {
 
     private static final Pattern dateFormat = Pattern.compile("[0-9]{1,2}/[0-9]{1,2}/[0-9]{2}");
     private ChangeListener<? super String> dateFieldListener = ((observable, oldValue, newValue) -> {
-        if(matcher(dateFormat,newValue)){
+        if(isValidDateField()){
             setTextFieldRight(dateField);
         }
         else {
