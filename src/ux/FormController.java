@@ -2,21 +2,22 @@ package ux;
 
 
 import javafx.beans.value.ChangeListener;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import utils.Exercise;
+import utils.ExerciseTrainingInstance;
 import utils.Time;
 import utils.Workout;
-import ux.test.Product;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FormController extends Controller implements Initializable {
@@ -37,27 +38,19 @@ public class FormController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        setupTable();
         dateField.textProperty().addListener(dateFieldListener);
         try {
             List<Exercise> exercises = MainController.dbConnect.getExercises(0);
-            comboBox.getItems().addAll("hei","hopp");
+            comboBox.getItems().addAll("hei","hopp"); //TODO: Legg til exercises navn istedet for hei hopp
             comboBox.getSelectionModel().selectFirst();
         }catch (Exception e){
-            System.out.println(e.getStackTrace());
+            System.out.println(Arrays.toString(e.getStackTrace()));
         }
 
     }
 
-    private static final Pattern dateFormat = Pattern.compile("[0-9]{1,2}/[0-9]{1,2}/[0-9]{2}");
-    private ChangeListener<? super String> dateFieldListener = ((observable, oldValue, newValue) -> {
-        Matcher matcher = dateFormat.matcher(newValue);
-        if(matcher.matches()){
-            //TODO: LEGG TIL RIKIT I LABEL!!!
-        }
-        else {
-            //TODO: LEGG TIL FEIL I LABEL!!
-        }
-    });
+
 
 
     // Workout(int id, Date date, Time time, int duration, int performance, String log)
@@ -70,17 +63,68 @@ public class FormController extends Controller implements Initializable {
         changeSceneToIndex();
     }
 
-
+    private boolean matcher(Pattern pattern, String string){
+        return pattern.matcher(string).matches();
+    }
+    private static final Pattern numberPattern = Pattern.compile("[0-9]+");
+    private boolean isValidRepField(){
+        return matcher(numberPattern,repField.getText());
+    }
+    private boolean isValidSettField(){
+        return matcher(numberPattern,settField.getText());
+    }
+    private boolean isValidWeightField(){
+        return matcher(numberPattern,weightField.getText());
+    }
 
     @FXML
     public void button_legg_til(){
-        table.getColumns().stream().forEach(a-> System.out.println(a.getClass()));
+        if(isValidRepField()&& isValidSettField() && isValidWeightField()){
+            ExerciseTrainingInstance exerciseTrainingInstance = new ExerciseTrainingInstance(
+                    comboBox.getValue().toString(),
+                    Integer.valueOf(settField.getText()),
+                    Integer.valueOf(repField.getText()),
+                    Integer.valueOf(weightField.getText())
+            );
+            table.getItems().add(exerciseTrainingInstance);
+            repField.clear();
+            weightField.clear();
+            settField.clear();
 
+        }else{
+            //TODO: Legg til feil tilbakemelding. Prøvde å legge til en exercise når feltene er feil! Vebjorn.
+        }
+
+
+    }
+
+    private void setupTable(){ //TODO: Set opp width slik at det blir bra. Vebjørn.
+        TableColumn<ExerciseTrainingInstance,String> nameColumn = new TableColumn<>("Navn");
+        nameColumn.setMinWidth(100);
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn<ExerciseTrainingInstance,Integer> repColumn = new TableColumn<>("Repetisjoner");
+        repColumn.setMinWidth(100);
+        repColumn.setCellValueFactory(new PropertyValueFactory<>("reps"));
+
+        TableColumn<ExerciseTrainingInstance,Integer> settColumn = new TableColumn<>("Sett");
+        settColumn.setMinWidth(100);
+        settColumn.setCellValueFactory(new PropertyValueFactory<>("sett"));
+
+        TableColumn<ExerciseTrainingInstance,Integer> weightColumn = new TableColumn<>("Vekt");
+        weightColumn.setMinWidth(100);
+        weightColumn.setCellValueFactory(new PropertyValueFactory<>("weight"));
+
+        table.getColumns().clear();
+        table.getColumns().addAll(nameColumn,repColumn,settColumn,weightColumn);
     }
 
     @FXML
     public void buttonRemove() throws IOException{
-        changeSceneToIndex();
+        ObservableList<ExerciseTrainingInstance> productSelected, allProducts;
+        allProducts = table.getItems();
+        productSelected = table.getSelectionModel().getSelectedItems();
+        productSelected.forEach(allProducts::remove);
     }
 
     @FXML
@@ -108,6 +152,31 @@ public class FormController extends Controller implements Initializable {
     public void saveButton() throws IOException{
         submitButton();
     }
+
+
+
+
+
+
+
+
+
+    private static final Pattern dateFormat = Pattern.compile("[0-9]{1,2}/[0-9]{1,2}/[0-9]{2}");
+    private ChangeListener<? super String> dateFieldListener = ((observable, oldValue, newValue) -> {
+        if(matcher(dateFormat,newValue)){
+            //TODO: LEGG TIL RIKIT I LABEL!!! Vebjørn.
+        }
+        else {
+            //TODO: LEGG TIL FEIL I LABEL!! Vebjørn.
+        }
+    });
+
+
+
+
+
+
+
 
 
 }
