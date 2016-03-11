@@ -5,7 +5,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import utils.Exercise;
@@ -77,6 +76,13 @@ public class FormController extends Controller implements Initializable {
     private boolean isValidWeightField(){
         return matcher(numberPattern,weightField.getText());
     }
+    private static final Pattern timeFieldPattern = Pattern.compile("[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}");
+    private boolean isValidTimeFIeld(){
+        return matcher(timeFieldPattern,timeField.getText());
+    }
+    private boolean isValidFormField(){
+        return matcher(numberPattern,formField.getText());
+    }
 
     @FXML
     public void button_legg_til(){
@@ -88,15 +94,13 @@ public class FormController extends Controller implements Initializable {
                     Integer.valueOf(weightField.getText())
             );
             table.getItems().add(exerciseTrainingInstance);
-            repField.clear();
-            weightField.clear();
-            settField.clear();
+            repField.setText("");
+            weightField.setText("");
+            settField.setText("");
 
         }else{
             //TODO: Legg til feil tilbakemelding. Prøvde å legge til en exercise når feltene er feil! Vebjorn.
         }
-
-
     }
 
     private void setupTable(){ //TODO: Set opp width slik at det blir bra. Vebjørn.
@@ -139,7 +143,6 @@ public class FormController extends Controller implements Initializable {
         }
     }
 
-
     private void changeSceneToIndex() throws IOException {
         changeScene("index.fxml");
 
@@ -149,13 +152,16 @@ public class FormController extends Controller implements Initializable {
     public void cancelButton()throws IOException{
         changeSceneToIndex();
     }
+
     @FXML
     public void saveButton() throws IOException{
         submitButton();
     }
+
     private void setTextFieldWrong(TextField textField){ //TODO: VEBJØRN HER!
         textField.setStyle("-fx-background-color: red");
     }
+
     private void setTextFieldRight(TextField textField){ //TODO: HER OGSÅÅ!!! VEBJØRN
         textField.setStyle("-fx-background-color: white");
     }
@@ -170,6 +176,15 @@ public class FormController extends Controller implements Initializable {
         repField.textProperty().addListener(repFieldListener);
         settField.textProperty().addListener(settFieldListener);
         weightField.textProperty().addListener(weightFieldListener);
+        timeField.textProperty().addListener(timeFieldListener);
+
+        //legger til hva som er påkrevd
+        setTextFieldWrong(dateField);
+        setTextFieldWrong(formField);
+        setTextFieldWrong(repField);
+        setTextFieldWrong(settField);
+        setTextFieldWrong(weightField);
+        setTextFieldWrong(timeField);
     }
 
     private static final Pattern dateFormat = Pattern.compile("[0-9]{1,2}/[0-9]{1,2}/[0-9]{2}");
@@ -190,6 +205,7 @@ public class FormController extends Controller implements Initializable {
             setTextFieldWrong(repField);
         }
     });
+
     private ChangeListener<? super String> settFieldListener = ((observable, oldValue, newValue) -> {
        if(isValidSettField()){
            setTextFieldRight(settField);
@@ -197,6 +213,7 @@ public class FormController extends Controller implements Initializable {
            setTextFieldWrong(settField);
        }
     });
+
     private ChangeListener<? super String> weightFieldListener =((observable, oldValue, newValue) -> {
        if(isValidWeightField()){
            setTextFieldRight(weightField);
@@ -204,24 +221,21 @@ public class FormController extends Controller implements Initializable {
            setTextFieldWrong(weightField);
        }
     });
+
     private ChangeListener<? super String> timeFieldListener = ((observable, oldValue, newValue) -> {
-        
+        if(isValidTimeFIeld()){
+            setTextFieldRight(timeField);
+        }else{
+            setTextFieldWrong(timeField);
+        }
     });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    private ChangeListener<? super String> formFieldListener = ((observable, oldValue, newValue) -> {
+       if (isValidFormField()){
+           setTextFieldRight(formField);
+       }else{
+           setTextFieldWrong(formField);
+       }
+    });
+//TODO: ADD LISTENER TIL LUFT/TEMPERATUR & FORHOLD/TILSKUERE
 }
