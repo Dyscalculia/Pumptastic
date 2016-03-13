@@ -39,7 +39,7 @@ public class JavaToSQL implements DBConnect {
 	public void insertWorkout(Workout workout) throws SQLException {
 		Workout w = workout;
 		int id;
-		String query = formatInsertQuery("Trening", "dato, tidpunkt, vargihet, form, log" , w.getDate() + ", " + w.getTime() + ", " + w.getDuration() + ", " + w.getPerformance() + ", " + w.getLog());
+		String query = formatInsertQuery("Treninger", "dato, tidpunkt, vargihet, form, log" , w.getDate() + ", " + w.getTime() + ", " + w.getDuration() + ", " + w.getPerformance() + ", " + w.getLog());
 		statement.executeUpdate(query);
 		ResultSet generatedKeys = statement.getGeneratedKeys();
         id = generatedKeys.getInt("id");
@@ -121,7 +121,7 @@ public class JavaToSQL implements DBConnect {
 	@Override
 	public List<Exercise> getExercisesLabels(Integer parentGroupId) throws SQLException {
 		String where = parentGroupId == null ? null : "gruppeId = '" + parentGroupId + "'";
-		String query = formatGetQuery("id, navn", "Øvelse", where, null);
+		String query = formatGetQuery("id, navn", "ovelser", where, null);
 		ResultSet results = statement.executeQuery(query);
 		List<Exercise> exercises = new ArrayList<Exercise>();
 		while (results.next()) {
@@ -150,7 +150,7 @@ public class JavaToSQL implements DBConnect {
 	@Override
 	public Integer getNumberExercises(Date newerThan) throws SQLException {
 		String where = newerThan == null ? "" : " AND dato >= '" + newerThan + "'";
-		String query = formatGetQuery("COUNT(*)", "ovelser AS O, ovelserITrening, Trening AS T", "O.id = ovelseId AND T.id = treningsId" + where, null);
+		String query = formatGetQuery("COUNT(*)", "ovelser AS O, ovelserITrening, Treninger AS T", "O.id = ovelseId AND T.id = treningsId" + where, null);
 		ResultSet results = statement.executeQuery(query);
 		return results.getInt(0);
 	}
@@ -163,7 +163,7 @@ public class JavaToSQL implements DBConnect {
 	@Override
 	public Integer getSumDuration(Date newerThan) throws SQLException {
 		String where = newerThan == null ? null : "dato >= '" + newerThan + "'";
-		String query = formatGetQuery("SUM(varighet)", "Trening", where, null);
+		String query = formatGetQuery("SUM(varighet)", "Treninger", where, null);
 		ResultSet results = statement.executeQuery(query);
 		return results.getInt(0);
 	}
@@ -176,7 +176,7 @@ public class JavaToSQL implements DBConnect {
 	@Override
 	public Double getAvgDuration(Date newerThan) throws SQLException {
 		String where = newerThan == null ? null : "dato >= '" + newerThan + "'";
-		String query = formatGetQuery("AVG(varighet)", "Trening", where, null);
+		String query = formatGetQuery("AVG(varighet)", "Treninger", where, null);
 		ResultSet results = statement.executeQuery(query);
 		return results.getDouble(0);
 	}
