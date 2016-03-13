@@ -1,6 +1,6 @@
 package ux;
 import backend.DBConnect;
-import backend.DBConnectMock;
+import backend.JavaToSQL;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,7 +12,7 @@ import java.net.URL;
 
 public class MainController  extends Application{
 
-    public static final DBConnect dbConnect = new DBConnectMock();
+    public static final JavaToSQL dbConnect = new JavaToSQL();
     @Override
     public void start(Stage prevStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("index.fxml"));

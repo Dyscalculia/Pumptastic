@@ -32,7 +32,7 @@ public class IndexController extends Controller implements Initializable {
     @FXML
     public void buttonGetTopTen(){
         try{
-            setGridPaneElements(MainController.dbConnect.getWorkouts()); //TODO: Endre getWorkouts til topTen...
+            setGridPaneElements(MainController.dbConnect.getWorkoutsLabels(null)); //TODO: Endre getWorkouts til topTen...
 
         }catch (SQLException e){
             System.out.println(e.getStackTrace());
@@ -45,7 +45,7 @@ public class IndexController extends Controller implements Initializable {
 
     private void setDefaultGridPaneElements(){
         try{
-            setGridPaneElements(MainController.dbConnect.getWorkouts());
+            setGridPaneElements(MainController.dbConnect.getWorkoutsLabels(null));
         }catch (Exception e){
             System.out.println(e.getStackTrace());
         }
