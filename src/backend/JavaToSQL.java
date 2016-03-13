@@ -147,6 +147,7 @@ public class JavaToSQL implements DBConnect {
 	 * @param newerThan			An SQL Date indicating that any work-out before given date should not be counted (null for any work-out)
 	 * @return					An integer for the number of exercises
 	 */
+	@Override
 	public Integer getNumberExercises(Date newerThan) throws SQLException {
 		String where = newerThan == null ? "" : " AND dato >= '" + newerThan + "'";
 		String query = formatGetQuery("COUNT(*)", "ovelser AS O, ovelserITrening, Trening AS T", "O.id = ovelseId AND T.id = treningsId" + where, null);
@@ -159,6 +160,7 @@ public class JavaToSQL implements DBConnect {
 	 * @param newerThan			An SQL Date indicating that any work-out before given date should not be calculated (null for any work-out)
 	 * @return					An integer representing the sum for the duration of all defined work-outs
 	 */
+	@Override
 	public Integer getSumDuration(Date newerThan) throws SQLException {
 		String where = newerThan == null ? null : "dato >= '" + newerThan + "'";
 		String query = formatGetQuery("SUM(varighet)", "Trening", where, null);
@@ -171,6 +173,7 @@ public class JavaToSQL implements DBConnect {
 	 * @param newerThan			An SQL Date indicating that any work-out before given date should not be calculated (null for any work-out)
 	 * @return					A decimal representing the average for the duration of all defined work-outs
 	 */
+	@Override
 	public Double getAvgDuration(Date newerThan) throws SQLException {
 		String where = newerThan == null ? null : "dato >= '" + newerThan + "'";
 		String query = formatGetQuery("AVG(varighet)", "Trening", where, null);

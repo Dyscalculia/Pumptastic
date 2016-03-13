@@ -15,6 +15,7 @@ import utils.Workout;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -41,7 +42,7 @@ public class FormController extends Controller implements Initializable {
         setupTable();
         setupListeners();
         try {
-            List<Exercise> exercises = MainController.dbConnect.getExercises(0);
+            List<Exercise> exercises = MainController.dbConnect.getExercisesLabels(null);
             comboBox.getItems().addAll("hei","hopp","dette", "var", "jo", "kjempe", "gøy"); //TODO: Legg til exercises navn istedet for hei hopp
             comboBox.getSelectionModel().selectFirst();
         }catch (Exception e){
@@ -55,13 +56,13 @@ public class FormController extends Controller implements Initializable {
 
     // Workout(int id, Date date, Time time, int duration, int performance, String log)
     @FXML
-    public void submitButton() throws IOException{
+    public void submitButton() throws IOException, SQLException{
         if(isValidFormField() && isValidRepField() && isValidTimeFIeld() && isValidWeightField() && isValidSettField() && isValidDateField()
                 ) {
             String[] dates = dateField.getText().split("/");
             Date date = new Date(Integer.valueOf(dates[0]), Integer.valueOf(dates[1]), Integer.valueOf(dates[2]));
             Workout workout = new Workout(0, date, new Time("00:00:00"), 1, 0, ""); //TODO: Endre slik at dette blir riktig
-            MainController.dbConnect.createWorkout(workout);
+            MainController.dbConnect.insertWorkout(workout);
             changeSceneToIndex();
         }
         else {
@@ -164,7 +165,7 @@ public class FormController extends Controller implements Initializable {
     }
 
     @FXML
-    public void saveButton() throws IOException{
+    public void saveButton() throws IOException, SQLException{
         submitButton();
     }
 

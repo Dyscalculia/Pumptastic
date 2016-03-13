@@ -19,4 +19,10 @@ public interface DBConnect {
 	List<Exercise> getExercisesLabels(Integer parentGroupId) throws SQLException;
 
 	List<Workout> getWorkouts(Date newerThan) throws SQLException;
+	
+	Integer getNumberExercises(Date newerThan) throws SQLException;
+	
+	Integer getSumDuration(Date newerThan) throws SQLException;
+	
+	Double getAvgDuration(Date newerThan) throws SQLException;
 }

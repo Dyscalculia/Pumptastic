@@ -20,7 +20,7 @@ public class WeekSummaryController extends Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            initGridPane(MainController.dbConnect.getWorkouts());
+            initGridPane(MainController.dbConnect.getWorkoutsLabels(null));
         }catch (SQLException e){
             System.out.println(e.getStackTrace());
         }
