@@ -7,18 +7,21 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.net.URL;
+
 public class MainController  extends Application{
 
-    private static final DBConnect dbConnect = new DBConnectMock();
+    public static final DBConnect dbConnect = new DBConnectMock();
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(MainController.class.getResource("index.fxml"));
-        Pane pane =  loader.load();
-        IndexController indexController = loader.getController();
-        indexController.setPrevStage(primaryStage);
+    public void start(Stage prevStage) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("index.fxml"));
+        Pane pane = loader.load();
+        Controller controller =  loader.getController();
+        controller.setPrevStage(prevStage);
         Scene scene = new Scene(pane);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        prevStage.close();
+        prevStage.setScene(scene);
+        prevStage.show();
     }
-
 }

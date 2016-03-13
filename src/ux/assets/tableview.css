@@ -1,20 +1,20 @@
-.root{
+.root {
     -fx-background-color: #fff;
 }
 
-.table-view{
+.table-view {
     -fx-background-color: transparent;
 }
 
-.table-view:focused{
+.table-view:focused {
     -fx-background-color: transparent;
 }
 
-.table-view .column-header-background{
-    -fx-background-color: #028090;
+.table-view .column-header-background {
+    -fx-background-color: #1B98E0;
 }
 
-.table-view .column-header-background .label{
+.table-view .column-header-background .label {
     -fx-background-color: transparent;
     -fx-text-fill: white;
     -fx-font-family: 'Avenir';
@@ -29,19 +29,19 @@
 }
 
 .table-row-cell{
-    -fx-background-color: -fx-table-cell-border-color, #00A896;
+    -fx-background-color: -fx-table-cell-border-color, #006494;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
 }
 
 .table-row-cell:odd{
-    -fx-background-color: -fx-table-cell-border-color, #02C39A;
+    -fx-background-color: -fx-table-cell-border-color, #247BA0;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
 }
 
 .table-row-cell:selected {
-    -fx-background-color: #005797;
+    -fx-background-color: #13293D;
     -fx-background-insets: 0;
     -fx-background-radius: 1;
 }
@@ -63,4 +63,5 @@
 .table-view:row-selection > .placeholder > .label {
     -fx-text-fill: #fff;
     -fx-font-family: 'Avenir';
+    -fx-font-size: 20px;
 }

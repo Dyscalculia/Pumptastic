@@ -97,7 +97,6 @@ public class Main extends Application {
         ObservableList<Product> productSelected, allProducts;
         allProducts = table.getItems();
         productSelected = table.getSelectionModel().getSelectedItems();
-
         productSelected.forEach(allProducts::remove);
     }
 
