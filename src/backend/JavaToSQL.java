@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +20,48 @@ public class JavaToSQL implements DBConnect {
 	private String url;
 	private String user;
 	private String password;
-	
+
+	public static void main(String[] args)
+	{
+        // Noen veldig enkle tester
+
+		JavaToSQL test = new JavaToSQL();
+
+        // Innendørs
+        try
+        {
+            Workout testwo = new Workout(null, Date.valueOf(LocalDate.now()), new Time(5,23), 20, 5, "test123", "nicenice", 1337);
+            Exercise ex1 = test.getExercisesLabels(1).get(0);
+            Exercise ex2 = test.getExercisesLabels(1).get(1);
+            testwo.addExercise(ex1);
+            testwo.addExercise(ex2);
+
+            test.insertWorkout(testwo);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+
+        // Utendørs
+        try
+        {
+            Workout testwo = new Workout(null, Date.valueOf(LocalDate.now()), new Time(5,23), 20, 5, "test123", 21, "damndaniel");
+            Exercise ex1 = test.getExercisesLabels(1).get(2);
+            Exercise ex2 = test.getExercisesLabels(1).get(1);
+            testwo.addExercise(ex1);
+            testwo.addExercise(ex2);
+
+            test.insertWorkout(testwo);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+	}
+
 	public JavaToSQL() {
 		try {
 			Connection connection = DriverManager.getConnection(url, user, password);
@@ -39,17 +82,19 @@ public class JavaToSQL implements DBConnect {
 	public void insertWorkout(Workout workout) throws SQLException {
 		Workout w = workout;
 		int id;
-		String query = formatInsertQuery("Treninger", "dato, tidpunkt, vargihet, form, log" , w.getDate() + ", " + w.getTime() + ", " + w.getDuration() + ", " + w.getPerformance() + ", " + w.getLog());
-		statement.executeUpdate(query);
+		String query = formatInsertQuery("Treninger", "dato, tidspunkt, varighet, form, log" , "'" + w.getDate() + "', '" + w.getTime().getHour() + ":" + w.getTime().getMinute() + "', " + w.getDuration() + ", " + w.getPerformance() + ", '" + w.getLog() + "'");
+		statement.execute(query, Statement.RETURN_GENERATED_KEYS);
 		ResultSet generatedKeys = statement.getGeneratedKeys();
-        id = generatedKeys.getInt("id");
+		if (!generatedKeys.next())
+			throw new SQLException("What?");
+        id = generatedKeys.getInt("GENERATED_KEY");
 		if (workout.isOutside() != null) {
 			if (workout.isOutside()) {
-				query = formatInsertQuery("Utendors", null , id + ", " + w.getTemperature() + ", " + w.getWeather());
+				query = formatInsertQuery("Utendors", null , id + ", " + w.getTemperature() + ", '" + w.getWeather() + "'");
 				statement.executeUpdate(query);
 			}
 			else {
-				query = formatInsertQuery("Innendors", null , id + ", " + w.getAir() + ", " + w.getAudience());
+				query = formatInsertQuery("Innendors", null , id + ", '" + w.getAir() + "', " + w.getAudience());
 				statement.executeUpdate(query);
 			}
 		}
@@ -58,7 +103,7 @@ public class JavaToSQL implements DBConnect {
 			for (Exercise exercise : exercises) {
 				Integer eId = exercise.getId();
 				if (eId != null) {
-					query = formatInsertQuery("ovelserITrening", null , id + ", " + exercise.getId());
+					query = formatInsertQuery("OvelserITrening", null , id + ", " + exercise.getId());
 					statement.executeUpdate(query);
 				}
 			}
@@ -77,7 +122,7 @@ public class JavaToSQL implements DBConnect {
 		ResultSet results = statement.executeQuery(query);
 		List<Workout> workouts = new ArrayList<Workout>();
 		while (results.next()) {
-			workouts.add(new Workout(results.getInt("id"), results.getDate("date"), new Time(results.getString("time"))));
+			workouts.add(new Workout(results.getInt("id"), results.getDate("dato"), new Time(results.getString("tidspunkt"))));
 		}
 		return workouts;
 	}
@@ -102,10 +147,13 @@ public class JavaToSQL implements DBConnect {
 	 */
 	@Override
 	public Workout getWorkout(int id) throws SQLException {
-		String query = formatGetQuery("*", "Treninger", "id = '" + id + "'", null);
+		String query = formatGetQuery("*", "Treninger", "id = " + id, null);
 		ResultSet results = statement.executeQuery(query);
-		Workout workout = new Workout(results.getInt("id"), results.getDate("dato"), new Time(results.getString("tidspunkt")), results.getInt("varighet"), results.getInt("form"), results.getString("log"));
-		query = formatGetQuery("id, navn, beskrivelse, gruppeId", "ovelser, ovelserITrening", "id = ovelseId AND treningsId = '" + id + "'", null);
+		if (!results.next())
+			throw new SQLException("No workout found!");
+
+		Workout workout = new Workout(results.getInt("id"), results.getDate("dato"), new Time(results.getTime("tidspunkt").toLocalTime()), results.getInt("varighet"), results.getInt("form"), results.getString("log"));
+		query = formatGetQuery("id, navn, beskrivelse, gruppeId", "Ovelser, OvelserITrening", "id = ovelseId AND treningsId = '" + id + "'", null);
 		results = statement.executeQuery(query);
 		while (results.next()) {
 			workout.addExercise(new Exercise(results.getInt("id"), results.getString("navn"), results.getString("beskrivelse")));
@@ -121,7 +169,7 @@ public class JavaToSQL implements DBConnect {
 	@Override
 	public List<Exercise> getExercisesLabels(Integer parentGroupId) throws SQLException {
 		String where = parentGroupId == null ? null : "gruppeId = '" + parentGroupId + "'";
-		String query = formatGetQuery("id, navn", "ovelser", where, null);
+		String query = formatGetQuery("id, navn", "Ovelser", where, null);
 		ResultSet results = statement.executeQuery(query);
 		List<Exercise> exercises = new ArrayList<Exercise>();
 		while (results.next()) {
@@ -137,8 +185,10 @@ public class JavaToSQL implements DBConnect {
 	 */
 	@Override
 	public Exercise getExercise(String name) throws SQLException {
-		String query = formatGetQuery("*", "ovelser", "navn = " + name, null);
-		ResultSet results = statement.executeQuery(query);
+		String query = formatGetQuery("*", "Ovelser", "navn = " + name, null);
+        ResultSet results = statement.executeQuery(query);
+        if (!results.next())
+            throw new SQLException("No exercise found!");
 		return new Exercise(results.getInt("id"), results.getString("navn"), results.getString("beskrivelse"));
 	}
 	
@@ -150,9 +200,11 @@ public class JavaToSQL implements DBConnect {
 	@Override
 	public Integer getNumberExercises(Date newerThan) throws SQLException {
 		String where = newerThan == null ? "" : " AND dato >= '" + newerThan + "'";
-		String query = formatGetQuery("COUNT(*)", "ovelser AS O, ovelserITrening, Treninger AS T", "O.id = ovelseId AND T.id = treningsId" + where, null);
-		ResultSet results = statement.executeQuery(query);
-		return results.getInt(0);
+		String query = formatGetQuery("COUNT(*)", "Ovelser AS O, OvelserITrening, Treninger AS T", "O.id = ovelseId AND T.id = treningsId" + where, null);
+        ResultSet results = statement.executeQuery(query);
+        if (!results.next())
+            throw new SQLException("No exercise found!");
+		return results.getInt(1);
 	}
 	
 	/** Gives the sum of time spent on all work-outs from given date to the present
@@ -165,7 +217,9 @@ public class JavaToSQL implements DBConnect {
 		String where = newerThan == null ? null : "dato >= '" + newerThan + "'";
 		String query = formatGetQuery("SUM(varighet)", "Treninger", where, null);
 		ResultSet results = statement.executeQuery(query);
-		return results.getInt(0);
+        if (!results.next())
+            throw new SQLException("No workout found!");
+		return results.getInt(1);
 	}
 	
 	/** Gives the average of time spent on all work-outs from given date to the present
@@ -178,7 +232,9 @@ public class JavaToSQL implements DBConnect {
 		String where = newerThan == null ? null : "dato >= '" + newerThan + "'";
 		String query = formatGetQuery("AVG(varighet)", "Treninger", where, null);
 		ResultSet results = statement.executeQuery(query);
-		return results.getDouble(0);
+        if (!results.next())
+            throw new SQLException("No workout found!");
+		return results.getDouble(1);
 	}
 	
 	//Not very flexible for now, adjusted to currently needed queries
@@ -189,7 +245,7 @@ public class JavaToSQL implements DBConnect {
 			query += "WHERE " + where + " ";
 		}
 		if (sortBy != null) {
-			query += "SORT BY " + sortBy + " ";
+			query += "ORDER BY " + sortBy + " ";
 		}
 		return query;
 	}
