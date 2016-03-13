@@ -8,7 +8,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import utils.Exercise;
-import utils.ExerciseTrainingInstance;
 import utils.Time;
 import utils.Workout;
 
@@ -97,13 +96,14 @@ public class FormController extends Controller implements Initializable {
     @FXML
     public void button_legg_til(){
         if(isValidRepField()&& isValidSettField() && isValidWeightField()){
-            ExerciseTrainingInstance exerciseTrainingInstance = new ExerciseTrainingInstance(
+            Exercise Exercise = new Exercise(
+            		null,
                     comboBox.getValue().toString(),
                     Integer.valueOf(settField.getText()),
                     Integer.valueOf(repField.getText()),
                     Integer.valueOf(weightField.getText())
             );
-            table.getItems().add(exerciseTrainingInstance);
+            table.getItems().add(Exercise);
             repField.setText("");
             weightField.setText("");
             settField.setText("");
@@ -114,19 +114,19 @@ public class FormController extends Controller implements Initializable {
     }
 
     private void setupTable(){ //TODO: Set opp width slik at det blir bra. Vebjørn.
-        TableColumn<ExerciseTrainingInstance,String> nameColumn = new TableColumn<>("Navn");
+        TableColumn<Exercise,String> nameColumn = new TableColumn<>("Navn");
         nameColumn.setMinWidth(100);
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        TableColumn<ExerciseTrainingInstance,Integer> repColumn = new TableColumn<>("Repetisjoner");
+        TableColumn<Exercise,Integer> repColumn = new TableColumn<>("Repetisjoner");
         repColumn.setMinWidth(100);
         repColumn.setCellValueFactory(new PropertyValueFactory<>("reps"));
 
-        TableColumn<ExerciseTrainingInstance,Integer> settColumn = new TableColumn<>("Sett");
+        TableColumn<Exercise,Integer> settColumn = new TableColumn<>("Sett");
         settColumn.setMinWidth(100);
         settColumn.setCellValueFactory(new PropertyValueFactory<>("sett"));
 
-        TableColumn<ExerciseTrainingInstance,Integer> weightColumn = new TableColumn<>("Vekt");
+        TableColumn<Exercise,Integer> weightColumn = new TableColumn<>("Vekt");
         weightColumn.setMinWidth(100);
         weightColumn.setCellValueFactory(new PropertyValueFactory<>("weight"));
 
@@ -137,7 +137,7 @@ public class FormController extends Controller implements Initializable {
 
     @FXML
     public void buttonRemove() throws IOException{
-        ObservableList<ExerciseTrainingInstance> productSelected, allProducts;
+        ObservableList<Exercise> productSelected, allProducts;
         allProducts = table.getItems();
         productSelected = table.getSelectionModel().getSelectedItems();
         productSelected.forEach(allProducts::remove);

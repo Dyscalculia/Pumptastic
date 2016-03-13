@@ -108,14 +108,14 @@ public class JavaToSQL implements DBConnect {
 		query = formatGetQuery("id, navn, beskrivelse, gruppeId", "ovelser, ovelserITrening", "id = ovelseId AND treningsId = '" + id + "'", null);
 		results = statement.executeQuery(query);
 		while (results.next()) {
-			workout.addExercise(new Exercise(results.getInt("id"), results.getString("navn"), results.getString("beskrivelse"), results.getInt("gruppeId")));
+			workout.addExercise(new Exercise(results.getInt("id"), results.getString("navn"), results.getString("beskrivelse")));
 		}
 		return workout;
 	}
 	
 	/** Gives a list of Exercise objects only containing id and name
 	 * 
-	 * @param parentGroupId		An id indicating which group exercise belong to (null if it belongs to no group)
+	 * @param parentGroupId		An id indicating which group exercise belong to (null if it belongs to no group) [Not implemented in system]
 	 * @return					A List<Exercise> if database contains exercises with given parentGroupid, empty list otherwise
 	 */
 	@Override
@@ -139,7 +139,7 @@ public class JavaToSQL implements DBConnect {
 	public Exercise getExercise(String name) throws SQLException {
 		String query = formatGetQuery("*", "ovelser", "navn = " + name, null);
 		ResultSet results = statement.executeQuery(query);
-		return new Exercise(results.getInt("id"), results.getString("navn"), results.getString("beskrivelse"), results.getInt("gruppeId"));
+		return new Exercise(results.getInt("id"), results.getString("navn"), results.getString("beskrivelse"));
 	}
 	
 	/** Gives total number exercises from given date to the present
