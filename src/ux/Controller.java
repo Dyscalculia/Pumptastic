@@ -45,10 +45,11 @@ public abstract class Controller {
     }
     protected void setGridPaneElements(GridPane gridPane, List<Workout> workouts){
         gridPane.getChildren().clear();
+        gridPane.setVgap(10);
         int maxSize = workouts.size();
         for (int index = 0;index<maxSize;index++){
             Button button = new Button();
-            gridPane.add(createButton(workouts.get(index)),0,index); //TODO: FORMAT DETTE...... VEJBØRN ! ! ! ! ! !
+            gridPane.add(createButton(workouts.get(index)),0,index);
         }
     }
 }

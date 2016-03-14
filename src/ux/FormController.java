@@ -115,19 +115,19 @@ public class FormController extends Controller implements Initializable {
 
     private void setupTable(){ //TODO: Set opp width slik at det blir bra. Vebjørn.
         TableColumn<Exercise,String> nameColumn = new TableColumn<>("Navn");
-        nameColumn.setMinWidth(100);
+        nameColumn.setPrefWidth(138);
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         TableColumn<Exercise,Integer> repColumn = new TableColumn<>("Repetisjoner");
-        repColumn.setMinWidth(100);
+        repColumn.setPrefWidth(102);
         repColumn.setCellValueFactory(new PropertyValueFactory<>("reps"));
 
         TableColumn<Exercise,Integer> settColumn = new TableColumn<>("Sett");
-        settColumn.setMinWidth(100);
+        settColumn.setPrefWidth(74);
         settColumn.setCellValueFactory(new PropertyValueFactory<>("sett"));
 
         TableColumn<Exercise,Integer> weightColumn = new TableColumn<>("Vekt");
-        weightColumn.setMinWidth(100);
+        weightColumn.setPrefWidth(85);
         weightColumn.setCellValueFactory(new PropertyValueFactory<>("weight"));
 
         table.getColumns().clear();
