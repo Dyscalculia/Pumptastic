@@ -1,5 +1,8 @@
 package backend;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -7,9 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import utils.Time;
 import utils.Workout;
@@ -60,9 +63,32 @@ public class JavaToSQL implements DBConnect {
             e.printStackTrace();
         }
 
-	}
+        try
+        {
+            for (Workout wo : test.getWorkoutsLabels(null))
+            {
+                System.out.println(wo.getId());
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
 
-	public JavaToSQL() {
+    }
+
+	public JavaToSQL()
+	{
+		try
+		{
+			readDatabasePropertiesFromFile();
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+			System.exit(1);
+		}
+
 		try {
 			Connection connection = DriverManager.getConnection(url, user, password);
 			statement = connection.createStatement();
@@ -71,6 +97,34 @@ public class JavaToSQL implements DBConnect {
 			e.printStackTrace();
 			System.exit(1);
 		}
+	}
+
+	private void readDatabasePropertiesFromFile() throws Exception
+	{
+		Properties prop = new Properties();
+		String propFileName = "database.password";
+
+		InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+
+		if (inputStream != null)
+		{
+			try
+			{
+				prop.load(inputStream);
+			}
+			catch (IOException e)
+			{
+				throw new Exception("Database password file could not be loaded!");
+			}
+		}
+		else
+		{
+			throw new FileNotFoundException("Database password file not found!");
+		}
+
+		this.url = String.format("jdbc:mysql://%s/%s", prop.getProperty("dbIP"), prop.getProperty("dbName"));
+		this.user = prop.getProperty("user");
+		this.password = prop.getProperty("password");
 	}
 	
 	/** Saves a Workout to database
@@ -82,12 +136,16 @@ public class JavaToSQL implements DBConnect {
 	public void insertWorkout(Workout workout) throws SQLException {
 		Workout w = workout;
 		int id;
-		String query = formatInsertQuery("Treninger", "dato, tidspunkt, varighet, form, log" , "'" + w.getDate() + "', '" + w.getTime().getHour() + ":" + w.getTime().getMinute() + "', " + w.getDuration() + ", " + w.getPerformance() + ", '" + w.getLog() + "'");
-		statement.execute(query, Statement.RETURN_GENERATED_KEYS);
+		String query = formatInsertQuery("Treninger", "dato, tidspunkt, varighet, form, log" ,
+				"'" + w.getDate() + "', '" + w.getTime().getHour() + ":" + w.getTime().getMinute() + "', " +
+						w.getDuration() + ", " + w.getPerformance() + ", '" + w.getLog() + "'");
+		statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+
 		ResultSet generatedKeys = statement.getGeneratedKeys();
 		if (!generatedKeys.next())
 			throw new SQLException("What?");
         id = generatedKeys.getInt("GENERATED_KEY");
+
 		if (workout.isOutside() != null) {
 			if (workout.isOutside()) {
 				query = formatInsertQuery("Utendors", null , id + ", " + w.getTemperature() + ", '" + w.getWeather() + "'");
@@ -98,6 +156,7 @@ public class JavaToSQL implements DBConnect {
 				statement.executeUpdate(query);
 			}
 		}
+
 		List<Exercise> exercises = workout.getExercises();
 		if (exercises != null) {
 			for (Exercise exercise : exercises) {
@@ -112,7 +171,7 @@ public class JavaToSQL implements DBConnect {
 	
 	/** Gives a list of Workout objects only containing id, date and time
 	 * 
-	 * @param Date				An SQL Date indicating that any work-out before given date should not be included (null for any work-out)
+	 * @param newerThan				An SQL Date indicating that any work-out before given date should not be included (null for any work-out)
 	 * @return					A List<Workout> if database contains work-outs, an empty list otherwise
 	 */
 	@Override
@@ -129,7 +188,7 @@ public class JavaToSQL implements DBConnect {
 	
 	/** Gives a list of complete Workout objects containing every attribute as well as a list of exercises
 	 * 
-	 * @param Date				An SQL Date indicating that any work-out before given date should not be included (null for any work-out)
+	 * @param newerThan				An SQL Date indicating that any work-out before given date should not be included (null for any work-out)
 	 * @return					A List<Workout> if database contains work-outs, an empty list otherwise
 	 */
 	@Override
