@@ -9,7 +9,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -20,71 +19,32 @@ import utils.Exercise;
 
 public class JavaToSQL implements DBConnect {
 	private Statement statement;
-	private String url;
-	private String user;
-	private String password;
-
-	public static void main(String[] args)
-	{
-        // Noen veldig enkle tester
-
-		JavaToSQL test = new JavaToSQL();
-
-        // Innendørs
-        try
-        {
-            Workout testwo = new Workout(null, Date.valueOf(LocalDate.now()), new Time(5,23), 20, 5, "test123", "nicenice", 1337);
-            Exercise ex1 = test.getExercisesLabels(1).get(0);
-            Exercise ex2 = test.getExercisesLabels(1).get(1);
-            testwo.addExercise(ex1);
-            testwo.addExercise(ex2);
-
-            test.insertWorkout(testwo);
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-        }
-
-
-        // Utendørs
-        try
-        {
-            Workout testwo = new Workout(null, Date.valueOf(LocalDate.now()), new Time(5,23), 20, 5, "test123", 21, "damndaniel");
-            Exercise ex1 = test.getExercisesLabels(1).get(2);
-            Exercise ex2 = test.getExercisesLabels(1).get(1);
-            testwo.addExercise(ex1);
-            testwo.addExercise(ex2);
-
-            test.insertWorkout(testwo);
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-        }
-
-        try
-        {
-            for (Workout wo : test.getWorkoutsLabels(null))
-            {
-                System.out.println(wo.getId());
-            }
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-        }
-
-    }
+	private String url; // Loaded from external database configuration file
+	private String user; // Loaded from external database configuration file
+	private String password; // Loaded from external database configuration file
 
 	public JavaToSQL()
 	{
-		try
+        try
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+        }
+        catch (ClassNotFoundException e)
+        {
+            System.err.println("-->--> Failed to load MySQL JDBC driver. Make sure it is installed! " +
+            "A basic how-to for installing the driver can be found in the README.md file on GitHub.\n");
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        try
 		{
 			readDatabasePropertiesFromFile();
 		}
 		catch (Exception ex)
 		{
+            System.err.println("-->--> Failed to read database configuration file. Make sure this has been given " +
+            "to you, since this file will not be publicly available on GitHub.\n");
 			ex.printStackTrace();
 			System.exit(1);
 		}
@@ -97,34 +57,6 @@ public class JavaToSQL implements DBConnect {
 			e.printStackTrace();
 			System.exit(1);
 		}
-	}
-
-	private void readDatabasePropertiesFromFile() throws Exception
-	{
-		Properties prop = new Properties();
-		String propFileName = "database.password";
-
-		InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
-
-		if (inputStream != null)
-		{
-			try
-			{
-				prop.load(inputStream);
-			}
-			catch (IOException e)
-			{
-				throw new Exception("Database password file could not be loaded!");
-			}
-		}
-		else
-		{
-			throw new FileNotFoundException("Database password file not found!");
-		}
-
-		this.url = String.format("jdbc:mysql://%s/%s", prop.getProperty("dbIP"), prop.getProperty("dbName"));
-		this.user = prop.getProperty("user");
-		this.password = prop.getProperty("password");
 	}
 	
 	/** Saves a Workout to database
@@ -143,7 +75,7 @@ public class JavaToSQL implements DBConnect {
 
 		ResultSet generatedKeys = statement.getGeneratedKeys();
 		if (!generatedKeys.next())
-			throw new SQLException("What?");
+			throw new SQLException("The Workout insert query could not successfully execute!");
         id = generatedKeys.getInt("GENERATED_KEY");
 
 		if (workout.isOutside() != null) {
@@ -318,4 +250,38 @@ public class JavaToSQL implements DBConnect {
 		query += "VALUES(" + values + ")";
 		return query;
 	}
+
+    /** Loads the database connection settings from a seperate file.
+     * This allows the file to be excluded from our public repository
+     * without the need to constantly change the code.
+     *
+     * @throws IOException         Happens when the database configuration file either cannot be found, or cannot be loaded.
+     */
+    private void readDatabasePropertiesFromFile() throws IOException
+    {
+        Properties prop = new Properties();
+        String propFileName = "database.password";
+
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+
+        if (inputStream != null)
+        {
+            try
+            {
+                prop.load(inputStream);
+            }
+            catch (IOException e)
+            {
+                throw new IOException("Database password file could not be loaded!", e);
+            }
+        }
+        else
+        {
+            throw new FileNotFoundException("Database password file not found!");
+        }
+
+        this.url = String.format("jdbc:mysql://%s/%s", prop.getProperty("dbIP"), prop.getProperty("dbName"));
+        this.user = prop.getProperty("user");
+        this.password = prop.getProperty("password");
+    }
 }
