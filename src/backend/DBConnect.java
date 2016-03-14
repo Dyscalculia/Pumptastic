@@ -1,21 +1,28 @@
 package backend;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
-import utils.Group;
 import utils.Workout;
 import utils.Exercise;
 
-public interface DBConnect
-{
-    List<Workout> getWorkouts() throws SQLException;
+public interface DBConnect {
+	Workout getWorkout(int id) throws SQLException;
 
-    Workout getWorkout(int id) throws SQLException;
+    void insertWorkout(Workout workout) throws SQLException;
 
-    void createWorkout(Workout workout);
+	List<Workout> getWorkoutsLabels(Date newerThan) throws SQLException;
+	
+	Exercise getExercise(String name) throws SQLException;
 
-    List<Group> getGroups(Integer parentId) throws SQLException;
+	List<Exercise> getExercisesLabels(Integer parentGroupId) throws SQLException;
 
-    List<Exercise> getExercises(int parentGroupId) throws SQLException;
+	List<Workout> getWorkouts(Date newerThan) throws SQLException;
+	
+	Integer getNumberExercises(Date newerThan) throws SQLException;
+	
+	Integer getSumDuration(Date newerThan) throws SQLException;
+	
+	Double getAvgDuration(Date newerThan) throws SQLException;
 }

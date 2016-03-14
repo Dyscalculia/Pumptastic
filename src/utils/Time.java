@@ -1,5 +1,7 @@
 package utils;
 
+import java.time.LocalTime;
+
 public class Time {
 	private Integer hour;
 	private Integer minute;
@@ -14,15 +16,21 @@ public class Time {
 			throw new IllegalArgumentException("Time is invalid! Format: hour:minutes:seconds");
 		}
 	}
-	
+
 	public Time(int hour, int minute) {
-		if ((hour < 24 && hour >= 0) && (minute > 60 && minute >= 0)) {
+		if ((hour < 24 && hour >= 0) && (minute < 60 && minute >= 0)) {
 			this.hour = hour;
 			this.minute = minute;
 		}
 		else {
 			throw new IllegalArgumentException("Time is invalid!");
 		}
+	}
+
+	public Time(LocalTime time)
+	{
+		this.hour = time.getHour();
+		this.minute = time.getMinute();
 	}
 	
 	public void setMinute(Integer minute) {
