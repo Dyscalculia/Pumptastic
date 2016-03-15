@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import utils.Workout;
 
 
@@ -31,7 +32,7 @@ public class WeekSummaryController extends Controller implements Initializable {
             System.out.println(e.getStackTrace());
         }
     }
-    @FXML private GridPane gridPane;
+    @FXML private VBox gridPane;
     @FXML private Label hourLabel;
     @FXML private Label minuteLabel;
     @FXML private Label amountLabel;
@@ -49,5 +50,6 @@ public class WeekSummaryController extends Controller implements Initializable {
     private void initGridPane(List<Workout> workouts){
         setGridPaneElements(gridPane,workouts);
     }
+
 
 }
