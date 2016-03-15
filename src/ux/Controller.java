@@ -3,16 +3,13 @@ package ux;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import utils.Workout;
 
-import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.List;
-import java.util.Scanner;
 
 public abstract class Controller {
 
@@ -32,7 +29,6 @@ public abstract class Controller {
         prevStage.setScene(scene);
         prevStage.show();
     }
-//<Button mnemonicParsing="false" prefHeight="36.0" prefWidth="219.0" stylesheets="@assets/datebutton.css" text="8/3/16 06:32" />
 
     protected Button createButton(Workout workout){
         Button button = new Button();
@@ -43,12 +39,11 @@ public abstract class Controller {
         button.setStyle("-fx-text-fill: #fff;-fx-background-color: #028090;-fx-font-size: 16px;-fx-text-alignment: center;-fx-border-radius: 0px;-fx-font-family: 'Avenir'");
         return button;
     }
-    protected void setGridPaneElements(GridPane gridPane, List<Workout> workouts){
+    protected void setGridPaneElements(VBox gridPane, List<Workout> workouts){
         gridPane.getChildren().clear();
         int maxSize = workouts.size();
         for (int index = 0;index<maxSize;index++){
-            Button button = new Button();
-            gridPane.add(createButton(workouts.get(index)),0,index); //TODO: FORMAT DETTE...... VEJBØRN ! ! ! ! ! !
+            gridPane.getChildren().add(index,createButton(workouts.get(index)));
         }
     }
 }
