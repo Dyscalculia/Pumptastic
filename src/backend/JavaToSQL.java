@@ -111,7 +111,7 @@ public class JavaToSQL implements DBConnect {
 		String where = newerThan == null ? null : "dato >= '" + newerThan + "'";
 		String query = formatGetQuery("id, dato, tidspunkt", "Treninger", where, "dato DESC");
 		ResultSet results = statement.executeQuery(query);
-		List<Workout> workouts = new ArrayList<Workout>();
+		List<Workout> workouts = new ArrayList<>();
 		while (results.next()) {
 			workouts.add(new Workout(results.getInt("id"), results.getDate("dato"), new Time(results.getString("tidspunkt"))));
 		}
@@ -162,7 +162,7 @@ public class JavaToSQL implements DBConnect {
 		String where = parentGroupId == null ? null : "gruppeId = '" + parentGroupId + "'";
 		String query = formatGetQuery("id, navn", "Ovelser", where, null);
 		ResultSet results = statement.executeQuery(query);
-		List<Exercise> exercises = new ArrayList<Exercise>();
+		List<Exercise> exercises = new ArrayList<>();
 		while (results.next()) {
 			exercises.add(new Exercise(results.getInt("id"), results.getString("navn")));
 		}
