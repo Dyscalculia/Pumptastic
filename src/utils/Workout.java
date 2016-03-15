@@ -2,6 +2,8 @@ package utils;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public class Workout {
@@ -31,18 +33,20 @@ public class Workout {
 		this.log = log;
 	}
 
-	public Workout(Integer id, Date date, Time time, int duration, Integer performance, String log, String air, int audience) {
+	public Workout(Integer id, Date date, Time time, int duration, Integer performance, String log, String air, int audience,Collection<Exercise> exercises) {
 		this(id, date, time, duration, performance, log);
 		this.air = air;
 		this.audience = audience;
 		this.isOutside = false;
+		this.exercises.addAll(exercises);
 	}
 
-	public Workout(Integer id, Date date, Time time, int duration, Integer performance, String log, Integer temperature, String weather) {
+	public Workout(Integer id, Date date, Time time, int duration, Integer performance, String log, Integer temperature, String weather,Collection<Exercise> exercises) {
 		this(id, date, time, duration, performance, log);
 		this.temperature = temperature;
 		this.weather = weather;
 		this.isOutside = true;
+        this.exercises.addAll(exercises);
 	}
 
 	public List<Exercise> getExercises() {

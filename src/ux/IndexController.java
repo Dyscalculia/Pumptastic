@@ -11,6 +11,8 @@ import utils.Workout;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -32,7 +34,9 @@ public class IndexController extends Controller implements Initializable {
     @FXML
     public void buttonGetTopTen(){
         try{
-            setGridPaneElements(MainController.dbConnect.getWorkoutsLabels(null)); //TODO: Endre getWorkouts til topTen...
+            List<Workout> workouts = MainController.dbConnect.getWorkouts(null);
+            workouts.sort((a,b) -> b.getPerformance().compareTo(a.getPerformance()));
+            setGridPaneElements(workouts);
 
         }catch (SQLException e){
             System.out.println(e.getStackTrace());
