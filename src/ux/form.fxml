@@ -82,9 +82,9 @@
             <Font name="Avenir Roman" size="13.0" />
          </font>
       </TextField>
-      <TextField fx:id="formField" layoutX="263.0" layoutY="70.0" prefHeight="30.0" prefWidth="110.0" promptText="Form 1-10" stylesheets="@assets/textfield.css" />
-      <TextField fx:id="tempField" layoutX="31.0" layoutY="148.0" promptText="Temperatur" stylesheets="@assets/textfield.css" />
-      <TextField fx:id="wField" layoutX="203.0" layoutY="148.0" promptText="Værforhold" stylesheets="@assets/textfield.css" />
+      <TextField fx:id="formField" layoutX="263.0" layoutY="70.0" prefHeight="30.0" prefWidth="110.0" promptText="Form 0-9" stylesheets="@assets/textfield.css" />
+      <TextField fx:id="tempField" layoutX="31.0" layoutY="148.0" promptText="Tilskuere" stylesheets="@assets/textfield.css" />
+      <TextField fx:id="wField" layoutX="203.0" layoutY="148.0" promptText="Luftforhold" stylesheets="@assets/textfield.css" />
       <TextArea fx:id="logField" layoutX="31.0" layoutY="185.0" prefHeight="73.0" prefWidth="339.0" promptText="Beskrivelse av treningen" stylesheets="@assets/textarea.css" />
       <ComboBox fx:id="comboBox" layoutX="145.0" layoutY="268.0" prefHeight="27.0" prefWidth="227.0" stylesheets="@assets/combobox.css" />
       <Label layoutX="11.0" layoutY="265.0" prefHeight="32.0" prefWidth="173.0" text="Velg øvelse:" textFill="WHITE">

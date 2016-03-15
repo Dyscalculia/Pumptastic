@@ -3,8 +3,8 @@ package utils;
 public class Exercise implements Comparable<Exercise> {
 	private Integer id;
 	private String name;
-	private String descrition;
-	private int set;
+	private String description;
+	private int sett;
     private int reps;
     private int weight;
 	
@@ -16,19 +16,19 @@ public class Exercise implements Comparable<Exercise> {
 	public Exercise(Integer id, String name, String description) {
 		this(id, name);
 		this.name = name;
-		this.descrition = description;
+		this.description = description;
 	}
 	
-	public Exercise(Integer id, String name, int set, int reps, int weight) {
+	public Exercise(Integer id, String name, int sett, int reps, int weight) {
 		this(id, name);
-		this.set = set;
+		this.sett = sett;
 		this.reps = reps;
 		this.weight = weight;
 	}
 	
-	public Exercise(Integer id, String name, String description, int set, int reps, int weight) {
-		this(id, name, set, reps, weight);
-		this.descrition = description;
+	public Exercise(Integer id, String name, String description, int sett, int reps, int weight) {
+		this(id, name, sett, reps, weight);
+		this.description = description;
 	}
 	
 	public Integer getId() {
@@ -39,12 +39,12 @@ public class Exercise implements Comparable<Exercise> {
 		return name;
 	}
 
-	public String getDescrition() {
-		return descrition;
+	public String getDescription() {
+		return description;
 	}
 
-    public int getSet() {
-        return set;
+    public int getSett() {
+        return sett;
     }
 
     public int getReps() {

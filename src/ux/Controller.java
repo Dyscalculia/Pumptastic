@@ -36,7 +36,7 @@ public abstract class Controller {
 
     protected Button createButton(Workout workout){
         Button button = new Button();
-        button.setText("TODO: LEGG TIL TEXT");
+        button.setText(workout.getDate().toString());
         button.setMnemonicParsing(false);
         button.setPrefHeight(36.0);
         button.setPrefWidth(219);

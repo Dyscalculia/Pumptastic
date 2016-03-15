@@ -15,9 +15,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class FormController extends Controller implements Initializable {
@@ -42,7 +40,7 @@ public class FormController extends Controller implements Initializable {
         setupListeners();
         try {
             List<Exercise> exercises = MainController.dbConnect.getExercisesLabels(null);
-            comboBox.getItems().addAll("hei","hopp","dette", "var", "jo", "kjempe", "gøy"); //TODO: Legg til exercises navn istedet for hei hopp
+            comboBox.getItems().addAll(exercises.stream().map(a -> a.getName()).toArray()); //TODO: Legg til exercises navn istedet for hei hopp
             comboBox.getSelectionModel().selectFirst();
         }catch (Exception e){
             System.out.println(Arrays.toString(e.getStackTrace()));
@@ -56,11 +54,27 @@ public class FormController extends Controller implements Initializable {
     // Workout(int id, Date date, Time time, int duration, int performance, String log)
     @FXML
     public void submitButton() throws IOException, SQLException{
-        if(isValidFormField() && isValidRepField() && isValidTimeFIeld() && isValidWeightField() && isValidSettField() && isValidDateField()
+        if(isValidFormField()   && isValidTimeFIeld()   && isValidDateField() && isValidTempField()
                 ) {
+
             String[] dates = dateField.getText().split("/");
-            Date date = new Date(Integer.valueOf(dates[0]), Integer.valueOf(dates[1]), Integer.valueOf(dates[2]));
-            Workout workout = new Workout(0, date, new Time("00:00:00"), 1, 0, ""); //TODO: Endre slik at dette blir riktig
+
+            GregorianCalendar calendar = new GregorianCalendar(Integer.valueOf(dates[2]),Integer.valueOf(dates[1])-1,Integer.valueOf(dates[0]));
+            Date date = new Date(calendar.getTimeInMillis());
+            Time time = new Time(timeField.getText());
+            int form = Integer.valueOf(formField.getText());
+            int tempValue = Integer.valueOf(tempField.getText());
+            String wValue = wField.getText();
+            String log = logField.getText();
+            ObservableList e = table.getItems();
+            Workout workout;
+            //public Workout(Integer id, Date date, Time time, int duration, Integer performance, String log, String air, int audience,Exercise... exercises) {
+            //Workout(Integer id, Date date, Time time, int duration, Integer performance, String log, Integer temperature, String weather,Collection<Exercise> exercises)
+            if(outButton.isSelected()){ //ute
+                workout = new Workout(null,date,time,1,form,log,wValue,tempValue,e);
+            }else{ // inne
+                workout = new Workout(null,date,time,1,form,log,tempValue,wValue,e);
+            }
             MainController.dbConnect.insertWorkout(workout);
             changeSceneToIndex();
         }
@@ -91,6 +105,9 @@ public class FormController extends Controller implements Initializable {
     }
     private boolean isValidDateField(){
         return matcher(dateFormat,dateField.getText());
+    }
+    private boolean isValidTempField(){
+        return matcher(numberPattern,tempField.getText());
     }
 
     @FXML
@@ -189,6 +206,7 @@ public class FormController extends Controller implements Initializable {
         weightField.textProperty().addListener(weightFieldListener);
         timeField.textProperty().addListener(timeFieldListener);
         formField.textProperty().addListener(formFieldListener);
+        tempField.textProperty().addListener(tempFieldListener);
 
         //legger til hva som er påkrevd
         setTextFieldWrong(dateField);
@@ -197,9 +215,10 @@ public class FormController extends Controller implements Initializable {
         setTextFieldWrong(settField);
         setTextFieldWrong(weightField);
         setTextFieldWrong(timeField);
+        setTextFieldWrong(tempField);
     }
 
-    private static final Pattern dateFormat = Pattern.compile("[0-9]{1,2}/[0-9]{1,2}/[0-9]{2}");
+    private static final Pattern dateFormat = Pattern.compile("[0-9]{1,2}/[0-9]{1,2}/[0-9]{4}");
     private ChangeListener<? super String> dateFieldListener = ((observable, oldValue, newValue) -> {
         if(isValidDateField()){
             setTextFieldRight(dateField);
@@ -247,6 +266,14 @@ public class FormController extends Controller implements Initializable {
            setTextFieldRight(formField);
        }else{
            setTextFieldWrong(formField);
+       }
+    });
+
+    private ChangeListener<? super String> tempFieldListener = ((observable, oldValue, newValue) -> {
+       if (isValidTempField()){
+           setTextFieldRight(tempField);
+       }else{
+           setTextFieldWrong(tempField);
        }
     });
 //TODO: ADD LISTENER TIL LUFT/TEMPERATUR & FORHOLD/TILSKUERE
