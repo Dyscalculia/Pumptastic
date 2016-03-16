@@ -17,6 +17,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class FormController extends Controller implements Initializable {
 
@@ -39,13 +40,28 @@ public class FormController extends Controller implements Initializable {
         setupTable();
         setupListeners();
         try {
-            List<Exercise> exercises = MainController.dbConnect.getExercisesLabels(null);
-            comboBox.getItems().addAll(exercises.stream().map(a -> a.getName()).toArray()); //TODO: Legg til exercises navn istedet for hei hopp
-            comboBox.getSelectionModel().selectFirst();
+            setUpComboBox();
         }catch (Exception e){
             System.out.println(Arrays.toString(e.getStackTrace()));
         }
+    }
 
+    private void setUpComboBox(){
+        Collection exercisesInTable = (Collection)table.getItems().stream().map( a-> ((Exercise) a).getName()).collect(Collectors.toList());
+        try{
+            if(table.getItems().size() == MainController.dbConnect.getExercisesLabels(null).size()){
+                comboBox.getItems().clear();
+                comboBox.getItems().addAll("No more exercises!");
+                comboBox.getSelectionModel().selectFirst();
+            }else {
+                comboBox.getItems().clear();
+                List<Exercise> exercises = MainController.dbConnect.getExercisesLabels(null);
+                comboBox.getItems().addAll(exercises.stream().map(a -> a.getName()).filter(a -> !exercisesInTable.contains(a)).toArray());
+                comboBox.getSelectionModel().selectFirst();
+            }
+        }catch (SQLException e){
+            System.out.println(e.getStackTrace());
+        }
     }
 
 
@@ -112,7 +128,7 @@ public class FormController extends Controller implements Initializable {
 
     @FXML
     public void button_legg_til(){
-        if(isValidRepField()&& isValidSettField() && isValidWeightField()){
+        if(isValidRepField()&& isValidSettField() && isValidWeightField() && !comboBox.getItems().get(0).equals( "No more exercises!")){
             Exercise Exercise = new Exercise(
             		null,
                     comboBox.getValue().toString(),
@@ -124,6 +140,7 @@ public class FormController extends Controller implements Initializable {
             repField.setText("");
             weightField.setText("");
             settField.setText("");
+            setUpComboBox();
 
         }else{
             //TODO: Legg til feil tilbakemelding. Prøvde å legge til en exercise når feltene er feil! Vebjorn.
