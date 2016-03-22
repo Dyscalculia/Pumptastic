@@ -18,7 +18,6 @@ public class IndexController extends Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setDefaultGridPaneElements();
-
     }
     @FXML private VBox gridPane;
 
